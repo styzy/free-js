@@ -1,0 +1,24 @@
+{
+    "name": "free-js",
+    "version": "0.0.1",
+    "description": "An New Awesome Framework For Js",
+    "keywords": [
+        "free",
+        "free-js"
+    ],
+    "author": {
+        "name": "STYZY",
+        "email": "styzyreal@126.com",
+        "url": "https://our.styzy.cn"
+    },
+    "bugs": {
+        "url": "https://github.com/styzy/free-js/issues",
+        "email": "styzyreal@126.com"
+    },
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/styzy/free-js/issues"
+    },
+    "private": false
+}
