@@ -1,10 +1,11 @@
+import { version, devMode } from './config'
+
 class Core {
     constructor() {
         let free = get
         free.utils = {}
-            // free.log = null
-        free.version = '1.0.0'
-        free.devMode = false
+        free.version = version
+        free.devMode = devMode
         return free
     }
 }
