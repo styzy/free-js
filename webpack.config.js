@@ -4,12 +4,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const webpackConfig = {
     entry: {
-        index: './src/free.js'
+        free: './src/free.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: (chunkData) => {
-            return `${chunkData.chunk.name}.bundle.js`
+            return `${chunkData.chunk.name}.js`
         }
     },
     module: {
