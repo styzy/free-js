@@ -11,6 +11,10 @@ const stopDefaultEvent = function(event) {
         event.preventDefault()
     }
 
+    if (window.event) {
+        window.event.returnValue == false;
+    }
+
     return false
 }
 

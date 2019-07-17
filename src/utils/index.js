@@ -5,6 +5,7 @@ import cursorPosition from './cursorPosition'
 import deepClone from './deepClone'
 import stopDefaultEvent from './stopDefaultEvent'
 import isIframeCrossOrigin from './isIframeCrossOrigin'
+import fullScreen from './fullScreen'
 
 const utils = {
     getUrlQueryParams,
@@ -14,7 +15,8 @@ const utils = {
     setCursorPosition: cursorPosition.set,
     deepClone,
     stopDefaultEvent,
-    isIframeCrossOrigin
+    isIframeCrossOrigin,
+    fullScreen
 }
 
 export default utils
