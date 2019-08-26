@@ -1,12 +1,96 @@
+const constants = {
+    dataType: {
+        json: 'json',
+        jsonp: 'jsonp'
+    },
+    typesMap: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD']
+}
+
+const defaultOptions = {
+    url: window.location.href,
+    type: 'GET',
+    // 布尔值，表示请求是否异步处理。默认是 true
+    async: true,
+    // 布尔值，表示浏览器是否缓存被请求页面。默认是 true
+    // cache: true,
+    // 发送数据到服务器时所使用的内容类型。默认是："application/x-www-form-urlencoded"
+    contentType: 'application/x-www-form-urlencoded',
+    // 为所有 AJAX 相关的回调函数规定 "this" 值
+    context: null,
+    // 用于创建 XMLHttpRequest 对象的函数
+    xhr: null,
+    // 布尔值，规定是否为请求触发全局 AJAX 事件处理程序。默认是 true
+    // global:true,
+    // 布尔值，规定是否仅在最后一次请求以来响应发生改变时才请求成功。默认是 false
+    // ifModified:false,
+    // 规定请求的字符集
+    // scriptCharset:'',
+    // 布尔值，规定是否使用参数序列化的传统样式
+    // traditional:false,
+    // 规定在 HTTP 访问认证请求中使用的用户名
+    username: null,
+    // 规定在 HTTP 访问认证请求中使用的密码
+    password: null,
+    // 规定要发送到服务器的数据
+    data: null,
+    // 预期的服务器响应的数据类型
+    dataType: 'json',
+    // 用于处理 XMLHttpRequest 原始响应数据的函数
+    // dataFilter: null,
+    // 布尔值，规定通过请求发送的数据是否转换为查询字符串。默认是 true
+    // processData: true,
+    // 在一个 jsonp 中重写回调函数的字符串
+    jsonp: '',
+    // 在一个 jsonp 中规定回调函数的名称
+    jsonpCallback: 'jsonpCallback',
+    // 发送请求前运行的函数
+    beforeSend: null,
+    // 设置本地的请求超时时间（以毫秒计）
+    timeout: 20000,
+    // 如果请求成功要运行的函数
+    success: null,
+    // 如果请求失败要运行的函数
+    error: null,
+    // 请求完成时运行的函数（在请求成功或失败之后均调用，即在 success 和 error 函数之后）
+    complete: null,
+}
+
+let options = null
+let XHR = null
+
 // ajax
-const ajax = function(params) {
-    var XHR;
-    if (window.ActiveXObject) {
-        XHR = new ActiveXObject('Microsoft.XMLHTTP');
-    } else if (window.XMLHttpRequest) {
-        XHR = new XMLHttpRequest();
-    } else {
-        XHR = null;
+const ajax = function(userOptions) {
+    // 处理options
+    options = Object.assign(defaultOptions, userOptions)
+    options.type = options.type.toUpperCase()
+
+    if (!typeValid(options.type)) {
+        console.error('错误的请求类型type.')
+        return false
+    }
+
+    switch (options.dataType) {
+        case constants.dataType.json:
+            ajaxByJson()
+            break;
+        case constants.dataType.jsonp:
+            ajaxByJsonp()
+            break;
+        default:
+            break;
+    }
+}
+
+/**
+ * json
+ */
+function ajaxByJson() {
+
+    XHR = typeof options.xhr === 'function' ? options.xhr() : createXMLHttpRequest()
+
+    if (!XHR) {
+        console.error('浏览器不支持XmlHttpRequest对象，无法使用ajax功能.')
+        return false
     }
 
     //针对某些特定版本的mozillar浏览器的bug进行修正。
@@ -14,98 +98,194 @@ const ajax = function(params) {
         XHR.overrideMimeType('text/xml');
     }
 
-    var finParams = {
-        type: ((params.type) ? params.type : 'GET'),
-        url: ((params.url) ? params.url : null),
-        async: ((typeof(params.async) == 'undefined') ? true : params.async),
-        data: ((params.data) ? params.data : null),
-        dataType: ((params.dataType) ? params.dataType : 'json'),
-        callback: ((params.callback) ? params.callback : 'jsoncallback'),
-        time: ((params.time) ? params.time : null),
-        beforeSend: ((params.beforeSend) ? params.beforeSend : null),
-        success: ((params.success) ? params.success : null),
-        error: ((params.error) ? params.error : null),
-    };
+    open()
 
-    //jsonp
-    if (finParams.dataType == 'jsonp') {
-        var jsonp = {};
-
-        //创建script标签
-        jsonp.head = document.getElementsByTagName('head')[0];
-        jsonp.scriptTag = document.createElement('script');
-        jsonp.head.appendChild(jsonp.scriptTag);
-
-        //创建callback
-        jsonp.callbackName = ('jsonp_' + Math.random()).replace('.', '');
-        finParams.data[finParams.callback] = jsonp.callbackName
-
-        //参数格式转换成字符串
-        dataFormat();
-
-        //callback注册到window对象
-        window[jsonp.callbackName] = function(json) {
-            jsonp.head.removeChild(jsonp.scriptTag);
-            clearTimeout(jsonp.timer);
-            window[jsonp.callbackName] = null;
-            finParams.success && finParams.success(json)
-        }
-
-        //发送请求
-        jsonp.scriptTag.src = finParams.url + '?' + finParams.data
-
-        //超时处理
-        if (finParams.time) {
-            jsonp.timer = setTimeout(function() {
-                window[jsonp.callbackName] = null;
-                jsonp.head.removeChild(jsonp.scriptTag);
-                finParams.error && finParams.error({
-                    message: '请求超时!'
-                })
-            }, finParams.time)
-        }
-    }
-    //json
-    else {
-        //参数格式转换成字符串
-        dataFormat();
-
-        //注册回调函数
-        XHR.onreadystatechange = function() {
-            //判断对象状态是交互完成，接收服务器返回的数据
-            if (XHR.readyState == 4) {
-                if (XHR.status == 200) {
-                    var json = eval('(' + XHR.responseText + ')')
-                    finParams.success && finParams.success(json);
-                } else {
-                    finParams.error && finParams.error();
-                }
-            }
-        };
-
-        //封装请求
-        XHR.open(finParams.type, finParams.url, finParams.async);
-        if (finParams.beforeSend != null) {
-            finParams.beforeSend();
-        }
-        if (finParams.type == 'POST') {
-            XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        }
-
-        //发出请求
-        XHR.send(finParams.data);
+    // 异步
+    if (options.async) {
+        // XHR.onreadystatechange = readyStateChangeHandler
+        XHR.onload = onReceive
+        XHR.timeout = options.timeout
+        XHR.ontimeout = onTimeout
     }
 
-    //将data的json转换为url中的参数
-    function dataFormat() {
-        if (finParams.data) {
-            var dataStr = '';
-            for (var item in finParams.data) {
-                dataStr += item + '=' + finParams.data[item] + '&'
-            }
-            dataStr = dataStr.substring(0, dataStr.length - 1);
-            finParams.data = dataStr;
+    onBeforeSend()
+    send()
+
+    // 同步
+    if (!options.async) {
+        onReceive()
+    }
+
+    // 初始化一个请求
+    function open() {
+        let url = options.url
+        if (options.type === 'GET') {
+            url += `${url.indexOf('?') === -1 ? '?' : '&'}${data2QueryString(options.data)}`
         }
+        XHR.open(options.type, url, options.async, options.username, options.password)
+    }
+
+    // 发送请求
+    function send() {
+        switch (options.type) {
+            case 'GET':
+                XHR.send(null)
+                break;
+            case 'POST':
+                XHR.setRequestHeader('Content-type', options.contentType)
+                XHR.send(data2QueryString(options.data))
+                break;
+            default:
+                break;
+        }
+    }
+
+    function readyStateChangeHandler() {
+        if (this.readyState === 4) {
+            onReceive()
+        }
+    }
+
+    function onReceive() {
+        // HTTP 状态在 200-300 之间表示请求成功
+        // HTTP 状态为 304 表示请求内容未发生改变，可直接从缓存中读取
+        if (XHR.status >= 200 && XHR.status < 300 || XHR.status === 304) {
+            onSuccess(eval(`(${XHR.responseText})`))
+        } else {
+            onError(XHR.statusText)
+        }
+    }
+}
+
+/**
+ * jsonp
+ */
+function ajaxByJsonp() {
+    var timer = null
+    var callbackName = options.jsonpCallback || ('jsonpcallback_' + Date.now())
+    var script_url = `${options.url}?${options.jsonp || 'callback'}=${callbackName}&${data2QueryString(options.data)}`
+
+    var el_script = document.createElement('script');
+    el_script.src = script_url
+
+    window[callbackName] = callbackHandler
+
+    // 回调处理
+    function callbackHandler(json) {
+        document.head.removeChild(el_script)
+            //TODO回调执行方法
+        if (timer) {
+            window.clearTimeout(timer)
+            timer = null
+            delete window[callbackName]
+            onSuccess(json)
+        }
+    }
+
+
+    onBeforeSend()
+
+    // 插入script
+    document.head.appendChild(el_script)
+
+    // 超时定时器
+    if (options.timeout) {
+        timer = window.setTimeout(function() {
+            timer = null
+            document.head.removeChild(el_script)
+            delete window[callbackName]
+            onTimeout()
+        }, options.timeout)
+    }
+}
+
+/*************************钩子函数**************************/
+
+function onBeforeSend() {
+    if (typeof options.beforeSend === 'function') {
+        if (options.context) {
+            options.beforeSend.call(options.context, XHR)
+        } else {
+            options.success(XHR)
+        }
+    }
+}
+
+function onSuccess(data) {
+    if (typeof options.success === 'function') {
+        if (options.context) {
+            options.success.call(options.context, data, XHR ? XHR.status : undefined, XHR)
+        } else {
+            options.success(data, XHR ? XHR.status : undefined, XHR)
+        }
+    }
+    onComplete()
+}
+
+function onError(error) {
+    if (typeof options.error === 'function') {
+        if (options.context) {
+            options.error.call(options.context, XHR, XHR ? XHR.status : undefined, error)
+        } else {
+            options.error(XHR, XHR ? XHR.status : undefined, error)
+        }
+    }
+    onComplete()
+}
+
+function onComplete() {
+    if (typeof options.complete === 'function') {
+        if (options.context) {
+            options.complete.call(options.context, XHR, XHR ? XHR.status : undefined)
+        } else {
+            options.complete(XHR, XHR ? XHR.status : undefined)
+        }
+    }
+}
+
+function onTimeout() {
+    onError('请求超时')
+}
+
+/*************************工具函数**************************/
+
+/**
+ * 创建XmlHttpRequest实例对象
+ */
+function createXMLHttpRequest() {
+    var XHR = null;
+    if (window.ActiveXObject) {
+        XHR = new ActiveXObject('Microsoft.XMLHTTP');
+    } else if (window.XMLHttpRequest) {
+        XHR = new XMLHttpRequest();
+    }
+    return XHR
+}
+
+/**
+ * 验证type
+ * @param {String} type 
+ */
+function typeValid(type) {
+    return constants.typesMap.some(item => item === type)
+}
+
+/**
+ * data转换urlQueryString
+ * @param {*} data 
+ */
+function data2QueryString(data) {
+    if (data) {
+        var array = []
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                const item = data[key];
+                array.push(`${window.encodeURIComponent(key)}=${window.encodeURIComponent(item)}`)
+            }
+        }
+        return array.join('&')
+    } else {
+        return ''
     }
 }
 
