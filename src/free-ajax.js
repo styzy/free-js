@@ -3,6 +3,14 @@ const constants = {
         json: 'json',
         jsonp: 'jsonp'
     },
+    accepts: {
+        '*': '*/*',
+        'html': 'text/html',
+        'json': 'application/json, text/javascript',
+        'script': 'text/javascript, application/javascript, application/ecmascript, application/x-ecmascript',
+        'text': 'text/plain',
+        'xml': 'application/xml, text/xml'
+    },
     typesMap: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD']
 }
 
@@ -38,7 +46,7 @@ const defaultOptions = {
     // 用于处理 XMLHttpRequest 原始响应数据的函数
     // dataFilter: null,
     // 布尔值，规定通过请求发送的数据是否转换为查询字符串。默认是 true
-    // processData: true,
+    processData: true,
     // 在一个 jsonp 中重写回调函数的字符串
     jsonp: '',
     // 在一个 jsonp 中规定回调函数的名称
@@ -120,7 +128,11 @@ function ajaxByJson() {
     function open() {
         let url = options.url
         if (options.type === 'GET') {
-            url += `${url.indexOf('?') === -1 ? '?' : '&'}${data2QueryString(options.data)}`
+            if (options.processData) {
+                url += `${url.indexOf('?') === -1 ? '?' : '&'}${data2QueryString(options.data)}`
+            } else {
+                url += `${url.indexOf('?') === -1 ? '?' : '&'}${options.data}`
+            }
         }
         XHR.open(options.type, url, options.async, options.username, options.password)
     }
@@ -133,7 +145,13 @@ function ajaxByJson() {
                 break;
             case 'POST':
                 XHR.setRequestHeader('Content-type', options.contentType)
-                XHR.send(data2QueryString(options.data))
+                let acceptsArr = []
+                if (constants.accepts[options.dataType]) {
+                    acceptsArr.push(constants.accepts[options.dataType])
+                }
+                acceptsArr.push(constants.accepts['*'])
+                XHR.setRequestHeader('Accept', acceptsArr.join(', '))
+                XHR.send(options.processData ? data2QueryString(options.data) : options.data)
                 break;
             default:
                 break;
@@ -162,8 +180,9 @@ function ajaxByJson() {
  */
 function ajaxByJsonp() {
     var timer = null
+    var queryStr = options.processData ? data2QueryString(options.data) : options.data
     var callbackName = options.jsonpCallback || ('jsonpcallback_' + Date.now())
-    var script_url = `${options.url}?${options.jsonp || 'callback'}=${callbackName}&${data2QueryString(options.data)}`
+    var script_url = `${options.url}?${options.jsonp || 'callback'}=${callbackName}&${queryStr}`
 
     var el_script = document.createElement('script');
     el_script.src = script_url
