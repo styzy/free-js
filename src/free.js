@@ -3,6 +3,7 @@ import ajax from './free-ajax'
 import utils from './utils'
 import Log from './free-log'
 import classesExtendMethdos from './classesExtendMethods'
+import logo from './free-logo'
 
 const existOtherInstance = !!window.free
 
@@ -15,6 +16,7 @@ if (!existOtherInstance) {
     core.awesome = () => {
         return applyClassesExtendMethdos.call(core, classesExtendMethdos)
     }
+    logo(core)
 } else {
     console.warn('free-js无法使用，free关键字占用')
 }
