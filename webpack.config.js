@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const path = require('path')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -52,6 +53,9 @@ const webpackConfig = {
                 removeComments: true, // 去除注释
                 collapseWhitespace: true //是否去除空格
             }
+        }),
+        new webpack.DefinePlugin({
+            BUILD_TIME: JSON.stringify(Date.now())
         })
     ]
 }

@@ -1,11 +1,13 @@
-import { version, devMode } from './config'
+import { devMode, version, buildTime, githubUrl } from './config'
 
 class Core {
     constructor() {
         let free = get
         free.utils = {}
-        free.version = version
         free.devMode = devMode
+        free.version = version
+        free.buildTime = buildTime
+        free.githubUrl = githubUrl
         return free
     }
 }

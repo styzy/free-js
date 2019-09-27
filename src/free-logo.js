@@ -9,7 +9,6 @@
 //       \/_/              \/_/    \/_/       \/_________/       \/_________/
 
 const logo = function(core) {
-    let version = core.version
     let logoSrting =
         '%c' +
         '\n _________         __________         __________         __________' +
@@ -22,11 +21,13 @@ const logo = function(core) {
         '\n     \\ \\_\\             \\ \\_\\   \\ \\_\\      \\ \\_________\\      \\ \\_________\\' +
         '\n      \\/_/              \\/_/    \\/_/       \\/_________/       \\/_________/' +
         '\n\n' +
-        `\nPowered by %cfree-js ${version}\n` +
-        '\n\n'
+        `\nPowered by %cfree-js ${core.version}\n` +
+        `\n%cBuild at %c${core.buildTime}\n` +
+        `\n%cGithub  %c${core.githubUrl}\n` +
+        '\n'
     let baseStyle = 'color:#00a1d6;font-weight:300;'
     let versionStyle = 'color:#00b1e6;font-weight:600;'
-    console.log(logoSrting, baseStyle, versionStyle)
+    console.log(logoSrting, baseStyle, versionStyle, baseStyle, versionStyle, baseStyle, versionStyle)
 }
 
 export default logo
