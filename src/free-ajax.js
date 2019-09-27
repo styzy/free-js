@@ -22,7 +22,7 @@ const defaultOptions = {
     // 布尔值，表示浏览器是否缓存被请求页面。默认是 true
     // cache: true,
     // 发送数据到服务器时所使用的内容类型。默认是："application/x-www-form-urlencoded"
-    contentType: 'application/x-www-form-urlencoded',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
     // 为所有 AJAX 相关的回调函数规定 "this" 值
     context: null,
     // 用于创建 XMLHttpRequest 对象的函数
@@ -48,9 +48,9 @@ const defaultOptions = {
     // 布尔值，规定通过请求发送的数据是否转换为查询字符串。默认是 true
     processData: true,
     // 在一个 jsonp 中重写回调函数的字符串
-    jsonp: '',
+    jsonp: 'callback',
     // 在一个 jsonp 中规定回调函数的名称
-    jsonpCallback: 'jsonpCallback',
+    jsonpCallback: `jsonpcallback_${Date.now()}`,
     // 发送请求前运行的函数
     beforeSend: null,
     // 设置本地的请求超时时间（以毫秒计）
@@ -68,9 +68,8 @@ let XHR = null
 
 // ajax
 const ajax = function(userOptions) {
-    // 处理options
-    options = Object.assign(defaultOptions, userOptions)
-    options.type = options.type.toUpperCase()
+    // 格式化options
+    options = optionsFormatter(userOptions)
 
     if (!typeValid(options.type)) {
         console.error('错误的请求类型type.')
@@ -87,6 +86,52 @@ const ajax = function(userOptions) {
         default:
             break;
     }
+}
+
+/**
+ * 格式化options
+ */
+function optionsFormatter(userOptions) {
+    let options = Object.assign({}, defaultOptions, userOptions)
+    options.type = options.type.toUpperCase()
+
+    if (options.contentType.indexOf('charset=UTF-8') === -1) {
+        options.contentType += '; charset=UTF-8'
+    }
+    switch (options.dataType) {
+        case constants.dataType.json:
+            if (options.type !== 'POST') {
+                options.contentType = defaultOptions.contentType
+            }
+            if (options.contentType.indexOf('application/json') !== -1) {
+                if (options.processData) {
+                    if (typeof options.data !== 'string') {
+                        options.data = JSON.stringify(options.data)
+                    }
+                }
+            } else if (options.contentType.indexOf('application/x-www-form-urlencoded') !== -1) {
+                if (options.processData) {
+                    options.data = data2QueryString(options.data)
+                }
+            } else {
+                if (options.processData) {
+                    options.data = data2QueryString(options.data)
+                }
+            }
+            if (options.type === 'GET') {
+                options.url += `${options.url.indexOf('?') === -1 ? '?' : '&'}${options.data}`
+                options.data = null
+            }
+            break;
+        case constants.dataType.jsonp:
+            options.data = data2QueryString(options.data)
+            break;
+        default:
+            break;
+    }
+
+
+    return options
 }
 
 /**
@@ -126,36 +171,22 @@ function ajaxByJson() {
 
     // 初始化一个请求
     function open() {
-        let url = options.url
-        if (options.type === 'GET') {
-            if (options.processData) {
-                url += `${url.indexOf('?') === -1 ? '?' : '&'}${data2QueryString(options.data)}`
-            } else {
-                url += `${url.indexOf('?') === -1 ? '?' : '&'}${options.data}`
-            }
-        }
-        XHR.open(options.type, url, options.async, options.username, options.password)
+        XHR.open(options.type, options.url, options.async, options.username, options.password)
     }
 
     // 发送请求
     function send() {
-        switch (options.type) {
-            case 'GET':
-                XHR.send(null)
-                break;
-            case 'POST':
-                XHR.setRequestHeader('Content-type', options.contentType)
-                let acceptsArr = []
-                if (constants.accepts[options.dataType]) {
-                    acceptsArr.push(constants.accepts[options.dataType])
-                }
-                acceptsArr.push(constants.accepts['*'])
-                XHR.setRequestHeader('Accept', acceptsArr.join(', '))
-                XHR.send(options.processData ? data2QueryString(options.data) : options.data)
-                break;
-            default:
-                break;
+        if (options.type === 'POST') {
+            XHR.setRequestHeader('Content-type', options.contentType)
+            let acceptsArr = []
+            if (constants.accepts[options.dataType]) {
+                acceptsArr.push(constants.accepts[options.dataType])
+            }
+            acceptsArr.push(constants.accepts['*'])
+            XHR.setRequestHeader('Accept', acceptsArr.join(', '))
+
         }
+        XHR.send(options.data)
     }
 
     function readyStateChangeHandler() {
@@ -180,14 +211,12 @@ function ajaxByJson() {
  */
 function ajaxByJsonp() {
     var timer = null
-    var queryStr = options.processData ? data2QueryString(options.data) : options.data
-    var callbackName = options.jsonpCallback || ('jsonpcallback_' + Date.now())
-    var script_url = `${options.url}?${options.jsonp || 'callback'}=${callbackName}&${queryStr}`
+    var script_url = `${options.url}?${options.jsonp}=${options.jsonpCallback}&${options.data}`
 
     var el_script = document.createElement('script');
     el_script.src = script_url
 
-    window[callbackName] = callbackHandler
+    window[options.jsonpCallback] = callbackHandler
 
     // 回调处理
     function callbackHandler(json) {
@@ -196,7 +225,7 @@ function ajaxByJsonp() {
         if (timer) {
             window.clearTimeout(timer)
             timer = null
-            delete window[callbackName]
+            delete window[options.jsonpCallback]
             onSuccess(json)
         }
     }
@@ -212,7 +241,7 @@ function ajaxByJsonp() {
         timer = window.setTimeout(function() {
             timer = null
             document.head.removeChild(el_script)
-            delete window[callbackName]
+            delete window[options.jsonpCallback]
             onTimeout()
         }, options.timeout)
     }
@@ -225,7 +254,7 @@ function onBeforeSend() {
         if (options.context) {
             options.beforeSend.call(options.context, XHR)
         } else {
-            options.success(XHR)
+            options.beforeSend(XHR)
         }
     }
 }
@@ -254,10 +283,20 @@ function onError(error) {
 
 function onComplete() {
     if (typeof options.complete === 'function') {
+        doCallback(options.complete)
+    }
+    if (options.complete instanceof Array) {
+        for (let index = 0, length = options.complete.length; index < length; index++) {
+            const fn = options.complete[index];
+            doCallback(fn)
+        }
+    }
+
+    function doCallback(fn) {
         if (options.context) {
-            options.complete.call(options.context, XHR, XHR ? XHR.status : undefined)
+            fn.call(options.context, XHR, XHR ? XHR.status : undefined)
         } else {
-            options.complete(XHR, XHR ? XHR.status : undefined)
+            fn(XHR, XHR ? XHR.status : undefined)
         }
     }
 }
