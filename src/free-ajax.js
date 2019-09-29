@@ -63,11 +63,12 @@ const defaultOptions = {
     complete: null,
 }
 
-let options = null
-let XHR = null
-
 // ajax
 const ajax = function(userOptions) {
+
+    let options = null
+    let XHR = null
+
     // 格式化options
     options = optionsFormatter(userOptions)
 
@@ -86,264 +87,263 @@ const ajax = function(userOptions) {
         default:
             break;
     }
-}
 
-/**
- * 格式化options
- */
-function optionsFormatter(userOptions) {
-    let options = Object.assign({}, defaultOptions, userOptions)
-    options.type = options.type.toUpperCase()
+    /**
+     * 格式化options
+     */
+    function optionsFormatter(userOptions) {
+        let options = Object.assign({}, defaultOptions, userOptions)
+        options.type = options.type.toUpperCase()
 
-    if (options.contentType.indexOf('charset=UTF-8') === -1) {
-        options.contentType += '; charset=UTF-8'
-    }
-    switch (options.dataType) {
-        case constants.dataType.json:
-            if (options.type !== 'POST') {
-                options.contentType = defaultOptions.contentType
-            }
-            if (options.contentType.indexOf('application/json') !== -1) {
-                if (options.processData) {
-                    if (typeof options.data !== 'string') {
-                        options.data = JSON.stringify(options.data)
+        if (options.contentType.indexOf('charset=UTF-8') === -1) {
+            options.contentType += '; charset=UTF-8'
+        }
+        switch (options.dataType) {
+            case constants.dataType.json:
+                if (options.type !== 'POST') {
+                    options.contentType = defaultOptions.contentType
+                }
+                if (options.contentType.indexOf('application/json') !== -1) {
+                    if (options.processData) {
+                        if (typeof options.data !== 'string') {
+                            options.data = JSON.stringify(options.data)
+                        }
+                    }
+                } else if (options.contentType.indexOf('application/x-www-form-urlencoded') !== -1) {
+                    if (options.processData) {
+                        options.data = data2QueryString(options.data)
+                    }
+                } else {
+                    if (options.processData) {
+                        options.data = data2QueryString(options.data)
                     }
                 }
-            } else if (options.contentType.indexOf('application/x-www-form-urlencoded') !== -1) {
-                if (options.processData) {
-                    options.data = data2QueryString(options.data)
+                if (options.type === 'GET') {
+                    options.url += `${options.url.indexOf('?') === -1 ? '?' : '&'}${options.data}`
+                    options.data = null
                 }
-            } else {
-                if (options.processData) {
-                    options.data = data2QueryString(options.data)
-                }
-            }
-            if (options.type === 'GET') {
-                options.url += `${options.url.indexOf('?') === -1 ? '?' : '&'}${options.data}`
-                options.data = null
-            }
-            break;
-        case constants.dataType.jsonp:
-            options.data = data2QueryString(options.data)
-            break;
-        default:
-            break;
-    }
-
-
-    return options
-}
-
-/**
- * json
- */
-function ajaxByJson() {
-
-    XHR = typeof options.xhr === 'function' ? options.xhr() : createXMLHttpRequest()
-
-    if (!XHR) {
-        console.error('浏览器不支持XmlHttpRequest对象，无法使用ajax功能.')
-        return false
-    }
-
-    //针对某些特定版本的mozillar浏览器的bug进行修正。
-    if (XHR.overrideMimeType) {
-        XHR.overrideMimeType('text/xml');
-    }
-
-    open()
-
-    // 异步
-    if (options.async) {
-        // XHR.onreadystatechange = readyStateChangeHandler
-        XHR.onload = onReceive
-        XHR.timeout = options.timeout
-        XHR.ontimeout = onTimeout
-    }
-
-    onBeforeSend()
-    send()
-
-    // 同步
-    if (!options.async) {
-        onReceive()
-    }
-
-    // 初始化一个请求
-    function open() {
-        XHR.open(options.type, options.url, options.async, options.username, options.password)
-    }
-
-    // 发送请求
-    function send() {
-        if (options.type === 'POST') {
-            XHR.setRequestHeader('Content-type', options.contentType)
-            let acceptsArr = []
-            if (constants.accepts[options.dataType]) {
-                acceptsArr.push(constants.accepts[options.dataType])
-            }
-            acceptsArr.push(constants.accepts['*'])
-            XHR.setRequestHeader('Accept', acceptsArr.join(', '))
-
+                break;
+            case constants.dataType.jsonp:
+                options.data = data2QueryString(options.data)
+                break;
+            default:
+                break;
         }
-        XHR.send(options.data)
+
+        return options
     }
 
-    function readyStateChangeHandler() {
-        if (this.readyState === 4) {
+    /**
+     * json
+     */
+    function ajaxByJson() {
+
+        XHR = typeof options.xhr === 'function' ? options.xhr() : createXMLHttpRequest()
+
+        if (!XHR) {
+            console.error('浏览器不支持XmlHttpRequest对象，无法使用ajax功能.')
+            return false
+        }
+
+        //针对某些特定版本的mozillar浏览器的bug进行修正。
+        if (XHR.overrideMimeType) {
+            XHR.overrideMimeType('text/xml');
+        }
+
+        open()
+
+        // 异步
+        if (options.async) {
+            // XHR.onreadystatechange = readyStateChangeHandler
+            XHR.onload = onReceive
+            XHR.timeout = options.timeout
+            XHR.ontimeout = onTimeout
+        }
+
+        onBeforeSend()
+        send()
+
+        // 同步
+        if (!options.async) {
             onReceive()
         }
-    }
 
-    function onReceive() {
-        // HTTP 状态在 200-300 之间表示请求成功
-        // HTTP 状态为 304 表示请求内容未发生改变，可直接从缓存中读取
-        if (XHR.status >= 200 && XHR.status < 300 || XHR.status === 304) {
-            onSuccess(eval(`(${XHR.responseText})`))
-        } else {
-            onError(XHR.statusText)
+        // 初始化一个请求
+        function open() {
+            XHR.open(options.type, options.url, options.async, options.username, options.password)
         }
-    }
-}
 
-/**
- * jsonp
- */
-function ajaxByJsonp() {
-    var timer = null
-    var script_url = `${options.url}?${options.jsonp}=${options.jsonpCallback}&${options.data}`
+        // 发送请求
+        function send() {
+            if (options.type === 'POST') {
+                XHR.setRequestHeader('Content-type', options.contentType)
+                let acceptsArr = []
+                if (constants.accepts[options.dataType]) {
+                    acceptsArr.push(constants.accepts[options.dataType])
+                }
+                acceptsArr.push(constants.accepts['*'])
+                XHR.setRequestHeader('Accept', acceptsArr.join(', '))
 
-    var el_script = document.createElement('script');
-    el_script.src = script_url
-
-    window[options.jsonpCallback] = callbackHandler
-
-    // 回调处理
-    function callbackHandler(json) {
-        document.head.removeChild(el_script)
-            //TODO回调执行方法
-        if (timer) {
-            window.clearTimeout(timer)
-            timer = null
-            delete window[options.jsonpCallback]
-            onSuccess(json)
+            }
+            XHR.send(options.data)
         }
-    }
 
-
-    onBeforeSend()
-
-    // 插入script
-    document.head.appendChild(el_script)
-
-    // 超时定时器
-    if (options.timeout) {
-        timer = window.setTimeout(function() {
-            timer = null
-            document.head.removeChild(el_script)
-            delete window[options.jsonpCallback]
-            onTimeout()
-        }, options.timeout)
-    }
-}
-
-/*************************钩子函数**************************/
-
-function onBeforeSend() {
-    if (typeof options.beforeSend === 'function') {
-        if (options.context) {
-            options.beforeSend.call(options.context, XHR)
-        } else {
-            options.beforeSend(XHR)
-        }
-    }
-}
-
-function onSuccess(data) {
-    if (typeof options.success === 'function') {
-        if (options.context) {
-            options.success.call(options.context, data, XHR ? XHR.status : undefined, XHR)
-        } else {
-            options.success(data, XHR ? XHR.status : undefined, XHR)
-        }
-    }
-    onComplete()
-}
-
-function onError(error) {
-    if (typeof options.error === 'function') {
-        if (options.context) {
-            options.error.call(options.context, XHR, XHR ? XHR.status : undefined, error)
-        } else {
-            options.error(XHR, XHR ? XHR.status : undefined, error)
-        }
-    }
-    onComplete()
-}
-
-function onComplete() {
-    if (typeof options.complete === 'function') {
-        doCallback(options.complete)
-    }
-    if (options.complete instanceof Array) {
-        for (let index = 0, length = options.complete.length; index < length; index++) {
-            const fn = options.complete[index];
-            doCallback(fn)
-        }
-    }
-
-    function doCallback(fn) {
-        if (options.context) {
-            fn.call(options.context, XHR, XHR ? XHR.status : undefined)
-        } else {
-            fn(XHR, XHR ? XHR.status : undefined)
-        }
-    }
-}
-
-function onTimeout() {
-    onError('请求超时')
-}
-
-/*************************工具函数**************************/
-
-/**
- * 创建XmlHttpRequest实例对象
- */
-function createXMLHttpRequest() {
-    var XHR = null;
-    if (window.ActiveXObject) {
-        XHR = new ActiveXObject('Microsoft.XMLHTTP');
-    } else if (window.XMLHttpRequest) {
-        XHR = new XMLHttpRequest();
-    }
-    return XHR
-}
-
-/**
- * 验证type
- * @param {String} type 
- */
-function typeValid(type) {
-    return constants.typesMap.some(item => item === type)
-}
-
-/**
- * data转换urlQueryString
- * @param {*} data 
- */
-function data2QueryString(data) {
-    if (data) {
-        var array = []
-        for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-                const item = data[key];
-                array.push(`${window.encodeURIComponent(key)}=${window.encodeURIComponent(item)}`)
+        function readyStateChangeHandler() {
+            if (this.readyState === 4) {
+                onReceive()
             }
         }
-        return array.join('&')
-    } else {
-        return ''
+
+        function onReceive() {
+            // HTTP 状态在 200-300 之间表示请求成功
+            // HTTP 状态为 304 表示请求内容未发生改变，可直接从缓存中读取
+            if (XHR.status >= 200 && XHR.status < 300 || XHR.status === 304) {
+                onSuccess(eval(`(${XHR.responseText})`))
+            } else {
+                onError(XHR.statusText)
+            }
+        }
+    }
+
+    /**
+     * jsonp
+     */
+    function ajaxByJsonp() {
+        var timer = null
+        var script_url = `${options.url}?${options.jsonp}=${options.jsonpCallback}&${options.data}`
+
+        var el_script = document.createElement('script');
+        el_script.src = script_url
+
+        window[options.jsonpCallback] = callbackHandler
+
+        // 回调处理
+        function callbackHandler(json) {
+            document.head.removeChild(el_script)
+                //TODO回调执行方法
+            if (timer) {
+                window.clearTimeout(timer)
+                timer = null
+                delete window[options.jsonpCallback]
+                onSuccess(json)
+            }
+        }
+
+
+        onBeforeSend()
+
+        // 插入script
+        document.head.appendChild(el_script)
+
+        // 超时定时器
+        if (options.timeout) {
+            timer = window.setTimeout(function() {
+                timer = null
+                document.head.removeChild(el_script)
+                delete window[options.jsonpCallback]
+                onTimeout()
+            }, options.timeout)
+        }
+    }
+
+    /*************************钩子函数**************************/
+
+    function onBeforeSend() {
+        if (typeof options.beforeSend === 'function') {
+            if (options.context) {
+                options.beforeSend.call(options.context, XHR)
+            } else {
+                options.beforeSend(XHR)
+            }
+        }
+    }
+
+    function onSuccess(data) {
+        if (typeof options.success === 'function') {
+            if (options.context) {
+                options.success.call(options.context, data, XHR ? XHR.status : undefined, XHR)
+            } else {
+                options.success(data, XHR ? XHR.status : undefined, XHR)
+            }
+        }
+        onComplete()
+    }
+
+    function onError(error) {
+        if (typeof options.error === 'function') {
+            if (options.context) {
+                options.error.call(options.context, XHR, XHR ? XHR.status : undefined, error)
+            } else {
+                options.error(XHR, XHR ? XHR.status : undefined, error)
+            }
+        }
+        onComplete()
+    }
+
+    function onComplete() {
+        if (typeof options.complete === 'function') {
+            doCallback(options.complete)
+        }
+        if (options.complete instanceof Array) {
+            for (let index = 0, length = options.complete.length; index < length; index++) {
+                const fn = options.complete[index];
+                doCallback(fn)
+            }
+        }
+
+        function doCallback(fn) {
+            if (options.context) {
+                fn.call(options.context, XHR, XHR ? XHR.status : undefined)
+            } else {
+                fn(XHR, XHR ? XHR.status : undefined)
+            }
+        }
+    }
+
+    function onTimeout() {
+        onError('请求超时')
+    }
+
+    /*************************工具函数**************************/
+
+    /**
+     * 创建XmlHttpRequest实例对象
+     */
+    function createXMLHttpRequest() {
+        var XHR = null;
+        if (window.ActiveXObject) {
+            XHR = new ActiveXObject('Microsoft.XMLHTTP');
+        } else if (window.XMLHttpRequest) {
+            XHR = new XMLHttpRequest();
+        }
+        return XHR
+    }
+
+    /**
+     * 验证type
+     * @param {String} type 
+     */
+    function typeValid(type) {
+        return constants.typesMap.some(item => item === type)
+    }
+
+    /**
+     * data转换urlQueryString
+     * @param {*} data 
+     */
+    function data2QueryString(data) {
+        if (data) {
+            var array = []
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    const item = data[key];
+                    array.push(`${window.encodeURIComponent(key)}=${window.encodeURIComponent(item)}`)
+                }
+            }
+            return array.join('&')
+        } else {
+            return ''
+        }
     }
 }
 

@@ -16,7 +16,7 @@ if (!existOtherInstance) {
     core.awesome = () => {
         return applyClassesExtendMethdos.call(core, classesExtendMethdos)
     }
-    logo(core)
+    core.devMode && logo(core)
 } else {
     console.warn('free-js无法使用，free关键字占用')
 }
