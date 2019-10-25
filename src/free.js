@@ -21,8 +21,6 @@ if (!existOtherInstance) {
     console.warn('free-js无法使用，free关键字占用')
 }
 
-!window.free && (window.free = core)
-
 function applyClassesExtendMethdos(classesExtendMethdos) {
     for (const className in classesExtendMethdos) {
         if (classesExtendMethdos.hasOwnProperty(className)) {
@@ -38,3 +36,8 @@ function applyClassesExtendMethdos(classesExtendMethdos) {
     }
     return 'owesome'
 }
+
+
+!window.free && (window.free = core)
+
+export default core

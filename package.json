@@ -1,7 +1,7 @@
 {
-    "name": "free-js",
-    "version": "0.0.1",
-    "description": "An New Awesome Framework For Js",
+    "name": "@styzy/free-js",
+    "version": "1.0.5",
+    "description": "An Awesome Framework For Js",
     "keywords": [
         "free",
         "free-js"
@@ -18,7 +18,7 @@
     "license": "ISC",
     "repository": {
         "type": "git",
-        "url": "https://github.com/styzy/free-js/issues"
+        "url": "https://github.com/styzy/free-js"
     },
     "private": false,
     "scripts": {
