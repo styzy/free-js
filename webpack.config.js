@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const webpackConfig = {
     entry: {
-        free: './src/free.js'
+        'free': './src/free.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -45,7 +45,7 @@ const webpackConfig = {
     plugins: [
         new UglifyJSPlugin(),
         new HtmlWebpackPlugin({
-            title: 'es7-cli',
+            title: 'free-dev',
             template: 'index.html',
             hash: true,
             // filename: './dist/index.html',

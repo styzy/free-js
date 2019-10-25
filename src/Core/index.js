@@ -1,7 +1,7 @@
-import { devMode, version, buildTime, githubUrl } from './config'
+import { version, buildTime, githubUrl } from '../config'
 
 class Core {
-    constructor() {
+    constructor(devMode) {
         let free = get
         free.utils = {}
         free.devMode = devMode
@@ -25,4 +25,4 @@ function get(selector) {
     }
 }
 
-export default new Core()
+export default Core
