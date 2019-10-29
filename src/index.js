@@ -6,7 +6,7 @@ import classesExtendMethdos from './classesExtendMethods'
 import logo from './logo'
 
 const Free = function(devMode) {
-    let core = new Core(devMode)
+    let core = new Core(!!devMode)
 
     core.utils = utils
     core.ajax = ajax

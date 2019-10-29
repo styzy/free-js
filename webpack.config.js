@@ -5,7 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const webpackConfig = {
     entry: {
-        'free': './src/free.js'
+        'free': './src/free.js',
+        'free.class': './src/index.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

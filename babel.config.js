@@ -7,7 +7,8 @@ const presets = [
                 firefox: "60",
                 chrome: "67",
                 safari: "11.1",
-                ie: "8"
+                ie: "8",
+                node: "6.0"
             },
             corejs: "3",
             // 是否将ES6的模块化语法转译成其他类型
