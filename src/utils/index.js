@@ -6,6 +6,7 @@ import deepClone from './deepClone'
 import stopDefaultEvent from './stopDefaultEvent'
 import isIframeCrossOrigin from './isIframeCrossOrigin'
 import fullScreen from './fullScreen'
+import importNode from './importNode'
 
 const utils = {
     getUrlQueryParams,
@@ -16,7 +17,8 @@ const utils = {
     deepClone,
     stopDefaultEvent,
     isIframeCrossOrigin,
-    fullScreen
+    fullScreen,
+    importNode
 }
 
 export default utils
