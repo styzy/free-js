@@ -16,11 +16,10 @@ const webpackConfig = {
     },
     module: {
         rules: [{
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: '/mode_modules/',
-                options: {
-                    presets: ['@babel/preset-env']
+                test: /\.m?js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader'
                 }
             },
             {
@@ -61,4 +60,6 @@ const webpackConfig = {
     ]
 }
 
-module.exports = webpackConfig
+module.exports = () => {
+    return webpackConfig
+}
