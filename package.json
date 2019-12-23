@@ -1,6 +1,6 @@
 {
     "name": "@styzy/free-js",
-    "version": "1.0.10",
+    "version": "1.1.0",
     "description": "An Awesome Framework For Js",
     "keywords": [
         "free",
@@ -21,7 +21,7 @@
         "url": "https://github.com/styzy/free-js"
     },
     "private": false,
-    "main": "dist/free.js",
+    "main": "dist/free.umd.js",
     "scripts": {
         "dev": "webpack-dev-server --mode=development --open --hot",
         "build": "webpack --mode=production"
