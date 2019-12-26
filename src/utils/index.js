@@ -7,18 +7,20 @@ import stopDefaultEvent from './stopDefaultEvent'
 import isIframeCrossOrigin from './isIframeCrossOrigin'
 import fullScreen from './fullScreen'
 import importNode from './importNode'
+import importTemplate from './importTemplate'
 
 const utils = {
-    getUrlQueryParams,
-    isParentNode,
-    getOffsetY,
-    getCursorPosition: cursorPosition.get,
-    setCursorPosition: cursorPosition.set,
-    deepClone,
-    stopDefaultEvent,
-    isIframeCrossOrigin,
-    fullScreen,
-    importNode
+	getUrlQueryParams,
+	isParentNode,
+	getOffsetY,
+	getCursorPosition: cursorPosition.get,
+	setCursorPosition: cursorPosition.set,
+	deepClone,
+	stopDefaultEvent,
+	isIframeCrossOrigin,
+	fullScreen,
+	importNode,
+	importTemplate
 }
 
 export default utils
