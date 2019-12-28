@@ -82,6 +82,7 @@ const autoComplateInput = function(opts) {
 			suggestions: options.suggestions,
 			suggestionValueKey: options.suggestionValueKey,
 			maxHeight: options.maxHeight,
+			isPositionFixed: options.el.style.position === 'fixed',
 			position,
 			size,
 			onFetch
@@ -114,7 +115,7 @@ const autoComplateInput = function(opts) {
 	}
 }
 
-function createSuggestionsElement({ suggestions, suggestionValueKey, position, size, maxHeight, onFetch }) {
+function createSuggestionsElement({ suggestions, suggestionValueKey, position, size, maxHeight, isPositionFixed, onFetch }) {
 	if (!suggestions.length) {
 		return null
 	}
@@ -124,6 +125,9 @@ function createSuggestionsElement({ suggestions, suggestionValueKey, position, s
 	el.style.top = `${position.y}px`
 	el.style.left = `${position.x}px`
 	el.style.maxHeight = `${maxHeight}px`
+	if (isPositionFixed) {
+		el.style.position = 'fixed'
+	}
 
 	suggestions.forEach(suggestion => {
 		let el_suggestion = createSuggestionElement({ suggestion, onFetch })
