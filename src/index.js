@@ -2,6 +2,7 @@ import Core from './Core'
 import ajax from './ajax'
 import utils from './utils'
 import Log from './Log'
+import components from './components'
 import classesExtendMethdos from './classesExtendMethods'
 import logo from './logo'
 
@@ -10,6 +11,7 @@ const Free = function(devMode) {
 
 	core.utils = utils
 	core.ajax = ajax
+	core.components = components
 	core.Log = () => {
 		return new Log({ devMode: core.devMode })
 	}

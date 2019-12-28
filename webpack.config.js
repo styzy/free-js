@@ -26,11 +26,11 @@ const webpackConfig = {
 			},
 			{
 				test: /\.css$/,
-				use: [{ loader: 'style-loader', options: { sourceMap: true } }, { loader: 'css-loader' }]
+				use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }]
 			},
 			{
-				test: /\.stylus$/,
-				loader: 'style-loader!css-loader!stylus-loader'
+				test: /\.styl$/,
+				use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }, { loader: 'stylus-loader' }]
 			},
 			{
 				test: /\.(gif|jpg|jpeg|png|svg|ttf)$/,

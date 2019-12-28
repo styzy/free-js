@@ -1,26 +1,48 @@
-import getUrlQueryParams from './getUrlQueryParams'
-import isParentNode from './isParentNode'
-import getOffsetY from './getOffsetY'
-import cursorPosition from './cursorPosition'
 import deepClone from './deepClone'
-import stopDefaultEvent from './stopDefaultEvent'
-import isIframeCrossOrigin from './isIframeCrossOrigin'
 import fullScreen from './fullScreen'
+import getCursorPosition from './getCursorPosition'
+import getOffsetLeft from './getOffsetLeft'
+import getOffsetTop from './getOffsetTop'
+import getScrollLeft from './getScrollLeft'
+import getScrollTop from './getScrollTop'
+import getUrlQueryParams from './getUrlQueryParams'
 import importNode from './importNode'
 import importTemplate from './importTemplate'
+import isIframeCrossOrigin from './isIframeCrossOrigin'
+import isParentNode from './isParentNode'
+import setCursorPosition from './setCursorPosition'
+import stopDefaultEvent from './stopDefaultEvent'
+
+export { deepClone }
+export { fullScreen }
+export { getCursorPosition }
+export { getOffsetLeft }
+export { getOffsetTop }
+export { getScrollLeft }
+export { getScrollTop }
+export { getUrlQueryParams }
+export { importNode }
+export { importTemplate }
+export { isIframeCrossOrigin }
+export { isParentNode }
+export { setCursorPosition }
+export { stopDefaultEvent }
 
 const utils = {
-	getUrlQueryParams,
-	isParentNode,
-	getOffsetY,
-	getCursorPosition: cursorPosition.get,
-	setCursorPosition: cursorPosition.set,
 	deepClone,
-	stopDefaultEvent,
-	isIframeCrossOrigin,
 	fullScreen,
+	getCursorPosition,
+	getOffsetLeft,
+	getOffsetTop,
+	getScrollLeft,
+	getScrollTop,
+	getUrlQueryParams,
 	importNode,
-	importTemplate
+	importTemplate,
+	isIframeCrossOrigin,
+	isParentNode,
+	setCursorPosition,
+	stopDefaultEvent
 }
 
 export default utils
