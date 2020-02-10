@@ -3,7 +3,7 @@ const importTemplate = function(template) {
 		template = document.querySelector(template)
 	}
 
-	return template.content || content
+	return template.content || template
 }
 
 export default importTemplate
