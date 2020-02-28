@@ -3,7 +3,11 @@ const importTemplate = function(template) {
 		template = document.querySelector(template)
 	}
 
-	return template.content || template.children[0]
+	if (template.content) {
+		template = template.content
+	}
+
+	return template.children[0]
 }
 
 export default importTemplate
