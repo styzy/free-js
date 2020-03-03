@@ -1,138 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>
-			<%= htmlWebpackPlugin.options.title %>
-		</title>
-		<style>
-			body {
-				margin: 0;
-			}
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>
+            <%= htmlWebpackPlugin.options.title %>
+        </title>
+        <style>
+            body {
+                margin: 0;
+            }
 
-			.input {
-				padding: 200px 200px 2000px;
-			}
+            .input {
+                padding: 200px 200px 2000px;
+            }
 
-			input {
-				margin: 10px;
-			}
-		</style>
-	</head>
+            input {
+                margin: 10px;
+            }
+        </style>
+    </head>
 
-	<body>
-		<div class="input">
-			<input type="text" />
-		</div>
-	</body>
-	<script>
-		// testAutoComplateInput()
-		testAjax()
+    <body>
+        <div class="input">
+            <input type="text" />
+        </div>
+    </body>
+    <script>
+        testAutoComplateInput()
+        // testAjax()
 
-		function testAutoComplateInput() {
-			free.components.autoComplateInput({
-				el: 'input',
-				// suggestions: [{
-				//     value: '1'
-				// }, {
-				//     value: '2'
-				// }],
-				fetchSuggestions: function(value, setSuggestions) {
-					console.log(value)
-					window.setTimeout(function() {
-						setSuggestions([
-							{
-								value: value
-							},
-							{
-								value: '2'
-							},
-							{
-								value: '2'
-							},
-							{
-								value: '2'
-							},
-							{
-								value: '2'
-							},
-							{
-								value: '2'
-							},
-							{
-								value: '2'
-							},
-							{
-								value: '2'
-							},
-							{
-								value: '2'
-							},
-							{
-								value: '2'
-							},
-							{
-								value: '2'
-							}
-						])
-					}, 1000)
-				}
-			})
-		}
+        function testAutoComplateInput() {
+            var autoComplateInput = new free.components.AutoComplateInput('input', {
+                // customInputEnable: false,
+                // suggestions: [{
+                //     value: '1'
+                // }, {
+                //     value: '2'
+                // }],
+                fetchSuggestions: function(value, setSuggestions) {
+                    console.log(value)
+                    window.setTimeout(function() {
+                        setSuggestions([
+                            {
+                                value: value
+                            },
+                            {
+                                value: '2'
+                            },
+                            {
+                                value: '2'
+                            },
+                            {
+                                value: '2'
+                            },
+                            {
+                                value: '2'
+                            },
+                            {
+                                value: '2'
+                            },
+                            {
+                                value: '2'
+                            },
+                            {
+                                value: '2'
+                            },
+                            {
+                                value: '2'
+                            },
+                            {
+                                value: '2'
+                            },
+                            {
+                                value: '2'
+                            }
+                        ])
+                    }, 1000)
+                }
+            })
+        }
 
-		function testAjax() {
-			var a = {}
-			free.ajax({
-				url: 'http://rap2api.taobao.org/app/mock/229190/ajax.freejs.cn/test',
-				type: 'GET',
-				type: 'POST',
-				// xhr: function() {},
-				// async: false,
-				// timeout: 1,
-				// context: a,
-				contentType: 'application/json; charset=UTF-8',
-				// dataType: 'jsonp',
-				data: {
-					a: 1
-				},
-				// data: JSON.stringify({
-				//     a: {}
-				// }),
-				// jsonp: 'a',
-				// jsonpCallback: 'cb',
-				beforeSend: function(xhr) {
-					console.log('beforeSend')
-					// console.log('xhr: ', xhr);
-				},
-				success: function(res, status, xhr) {
-					console.info('success', res)
-					// console.log(this);
-					// console.log('res: ', res);
-					// console.log('status: ', status);
-					// console.log('xhr: ', xhr);
-				},
-				error: function(xhr, status, error) {
-					console.info('error')
-					// console.log(this);
-					// console.log('xhr: ', xhr);
-					// console.log('status: ', status);
-					// console.log('error: ', error);
-				},
-				complete: [
-					function(xhr, status) {
-						console.log('complete1')
-						// console.log('xhr: ', xhr);
-						// console.log('status: ', status);
-					},
-					function(xhr, status) {
-						console.log('complete2')
-						// console.log('xhr: ', xhr);
-						// console.log('status: ', status);
-					}
-				]
-			})
-		}
-	</script>
+        function testAjax() {
+            var a = {}
+            free.ajax({
+                url: 'http://rap2api.taobao.org/app/mock/229190/ajax.freejs.cn/test',
+                type: 'GET',
+                type: 'POST',
+                // xhr: function() {},
+                // async: false,
+                // timeout: 1,
+                // context: a,
+                contentType: 'application/json; charset=UTF-8',
+                // dataType: 'jsonp',
+                data: {
+                    a: 1
+                },
+                // data: JSON.stringify({
+                //     a: {}
+                // }),
+                // jsonp: 'a',
+                // jsonpCallback: 'cb',
+                beforeSend: function(xhr) {
+                    console.log('beforeSend')
+                    // console.log('xhr: ', xhr);
+                },
+                success: function(res, status, xhr) {
+                    console.info('success', res)
+                    // console.log(this);
+                    // console.log('res: ', res);
+                    // console.log('status: ', status);
+                    // console.log('xhr: ', xhr);
+                },
+                error: function(xhr, status, error) {
+                    console.info('error')
+                    // console.log(this);
+                    // console.log('xhr: ', xhr);
+                    // console.log('status: ', status);
+                    // console.log('error: ', error);
+                },
+                complete: [
+                    function(xhr, status) {
+                        console.log('complete1')
+                        // console.log('xhr: ', xhr);
+                        // console.log('status: ', status);
+                    },
+                    function(xhr, status) {
+                        console.log('complete2')
+                        // console.log('xhr: ', xhr);
+                        // console.log('status: ', status);
+                    }
+                ]
+            })
+        }
+    </script>
 </html>

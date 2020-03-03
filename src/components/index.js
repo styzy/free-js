@@ -1,5 +1,5 @@
-import autoComplateInput from './autoComplateInput'
+import AutoComplateInput from './AutoComplateInput'
 
 export default {
-	autoComplateInput
+    AutoComplateInput
 }
