@@ -33,14 +33,9 @@
 
         function testAutoComplateInput() {
             var autoComplateInput = new free.components.AutoComplateInput('input', {
-                // customInputEnable: false,
-                // suggestions: [{
-                //     value: '1'
-                // }, {
-                //     value: '2'
-                // }],
+                customInputEnable: false,
+                // suggestions: ['1', '2', '3'],
                 fetchSuggestions: function(value, setSuggestions) {
-                    console.log(value)
                     window.setTimeout(function() {
                         setSuggestions([
                             {
@@ -80,6 +75,9 @@
                     }, 1000)
                 }
             })
+            autoComplateInput.onSelect = function(value) {
+                console.log('select value: ', value)
+            }
         }
 
         function testAjax() {

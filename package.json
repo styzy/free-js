@@ -1,6 +1,6 @@
 {
     "name": "@styzy/free-js",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "description": "An Awesome Framework For Js",
     "keywords": [
         "free",
@@ -38,6 +38,7 @@
         "autoprefixer": "^9.6.1",
         "babel-loader": "^8.0.6",
         "css-loader": "^3.0.0",
+        "file-loader": "^5.1.0",
         "html-webpack-plugin": "^3.2.0",
         "postcss-loader": "^3.0.0",
         "style-loader": "^0.23.1",
