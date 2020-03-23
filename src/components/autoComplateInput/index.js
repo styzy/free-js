@@ -9,6 +9,7 @@ class AutoComplateInput {
     #el_loading = null
     #fetchTimer = null
     #onSelect = null
+    #onCustomInputReset = null
     #config = {
         suggestions: [],
         suggestionValueKey: 'value',
@@ -31,6 +32,14 @@ class AutoComplateInput {
     set onSelect(value) {
         if (value instanceof Function) {
             this.#onSelect = value
+        }
+    }
+    get onCustomInputReset() {
+        return this.#onCustomInputReset
+    }
+    set onCustomInputReset(value) {
+        if (value instanceof Function) {
+            this.#onCustomInputReset = value
         }
     }
     get config() {
@@ -140,6 +149,7 @@ class AutoComplateInput {
     #blurHandler() {
         if (!this.config.customInputEnable && this.#isCustomInput) {
             this.el_input.value = ''
+            this.onCustomInputReset && this.onCustomInputReset.call(this)
         }
     }
     #inputHandler() {

@@ -78,6 +78,9 @@
             autoComplateInput.onSelect = function(value) {
                 console.log('select value: ', value)
             }
+            autoComplateInput.onCustomInputReset = function() {
+                console.log('customInputReset value: ', this)
+            }
         }
 
         function testAjax() {
