@@ -157,7 +157,7 @@
                     // console.log('xhr: ', xhr);
                 },
                 error: function (xhr, status, error) {
-                    console.log('error: ', error)
+                    console.log('error', error)
                     // console.log(this);
                     // console.log('xhr: ', xhr);
                     // console.log('status: ', status);
@@ -169,6 +169,15 @@
                     // console.log('status: ', status);
                 }
             })
+                .success(function (res, status, xhr) {
+                    console.log('success promise', res)
+                })
+                .error(function (xhr, status, error) {
+                    console.log('error promise', error)
+                })
+                .complete(function (xhr, status) {
+                    console.log('complete promise')
+                })
         }
     </script>
 </html>

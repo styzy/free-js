@@ -127,6 +127,28 @@ const ajax = function (userOptions) {
             break
     }
 
+    let promise = {
+            success: null,
+            error: null,
+            complete: null
+        },
+        promiseHandler = {
+            success(cb) {
+                promise.success = cb
+                return this
+            },
+            error(cb) {
+                promise.error = cb
+                return this
+            },
+            complete(cb) {
+                promise.complete = cb
+                return this
+            }
+        }
+
+    return promiseHandler
+
     /**
      * json
      */
@@ -168,7 +190,7 @@ const ajax = function (userOptions) {
         // 发送请求
         function send() {
             if (options.type === CONSTANTS.TYPES.POST) {
-                XHR.setRequestHeader('Content-type', options.contentType)
+                XHR.setRequestHeader('Content-Type', options.contentType)
                 let acceptsArr = []
                 if (CONSTANTS.ACCEPTS[options.dataType]) {
                     acceptsArr.push(CONSTANTS.ACCEPTS[options.dataType])
@@ -272,6 +294,9 @@ const ajax = function (userOptions) {
         if (isFunction(options.success)) {
             doCallback(options.success, data, XHR ? XHR.status : undefined, XHR)
         }
+        if (isFunction(promise.success)) {
+            doCallback(promise.success, data, XHR ? XHR.status : undefined, XHR)
+        }
         onComplete()
     }
 
@@ -282,6 +307,9 @@ const ajax = function (userOptions) {
         if (isFunction(options.error)) {
             doCallback(options.error, XHR, XHR ? XHR.status : undefined, error)
         }
+        if (isFunction(promise.error)) {
+            doCallback(promise.error, XHR, XHR ? XHR.status : undefined, error)
+        }
         onComplete()
     }
 
@@ -291,6 +319,9 @@ const ajax = function (userOptions) {
         }
         if (isFunction(options.complete)) {
             doCallback(options.complete, XHR, XHR ? XHR.status : undefined)
+        }
+        if (isFunction(promise.complete)) {
+            doCallback(promise.complete, XHR, XHR ? XHR.status : undefined)
         }
     }
 
