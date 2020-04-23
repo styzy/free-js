@@ -120,9 +120,9 @@
             var a = {}
 
             free.ajax({
-                // url: 'http://rap2api.taobao.org/app/mock/229190/ajax.freejs.cn/test',
+                url: 'http://rap2api.taobao.org/app/mock/229190/ajax.freejs.cn/test',
                 type: 'GET',
-                // type: 'POST',
+                type: 'POST',
                 // global: false,
                 // xhr: function() {},
                 // async: false,
@@ -163,18 +163,11 @@
                     // console.log('status: ', status);
                     // console.log('error: ', error);
                 },
-                complete: [
-                    function (xhr, status) {
-                        console.log('complete1')
-                        // console.log('xhr: ', xhr);
-                        // console.log('status: ', status);
-                    },
-                    function (xhr, status) {
-                        console.log('complete2')
-                        // console.log('xhr: ', xhr);
-                        // console.log('status: ', status);
-                    }
-                ]
+                complete: function (xhr, status) {
+                    console.log('complete')
+                    // console.log('xhr: ', xhr);
+                    // console.log('status: ', status);
+                }
             })
         }
     </script>

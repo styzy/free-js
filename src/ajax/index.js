@@ -119,7 +119,7 @@ const ajax = function (userOptions) {
      * json
      */
     function ajaxByJson() {
-        XHR = options.xhr instanceof Function ? options.xhr() : createXMLHttpRequest()
+        XHR = isFunction(options.xhr) ? options.xhr() : createXMLHttpRequest()
 
         if (!XHR) {
             console.error('浏览器不支持XmlHttpRequest对象，无法使用ajax功能.')
@@ -170,11 +170,11 @@ const ajax = function (userOptions) {
         function onReceive() {
             let responseText = XHR.responseText
 
-            if (useGlobal && globalOptions.dataFilter instanceof Function) {
+            if (useGlobal && isFunction(globalOptions.dataFilter)) {
                 responseText = globalOptions.dataFilter(responseText, options.dataType)
             }
 
-            if (options.dataFilter instanceof Function) {
+            if (isFunction(options.dataFilter)) {
                 responseText = options.dataFilter(responseText, options.dataType)
             }
 
@@ -220,11 +220,11 @@ const ajax = function (userOptions) {
             document.head.removeChild(el_script)
             delete window[jsonpCallback]
 
-            if (useGlobal && globalOptions.dataFilter instanceof Function) {
+            if (useGlobal && isFunction(globalOptions.dataFilter)) {
                 json = globalOptions.dataFilter(json, options.dataType)
             }
 
-            if (options.dataFilter instanceof Function) {
+            if (isFunction(options.dataFilter)) {
                 json = options.dataFilter(json, options.dataType)
             }
 
@@ -245,45 +245,40 @@ const ajax = function (userOptions) {
     /*************************钩子函数**************************/
 
     function onBeforeSend() {
-        if (useGlobal && globalOptions.beforeSend instanceof Function) {
+        if (useGlobal && isFunction(globalOptions.beforeSend)) {
             doCallback(globalOptions.beforeSend, XHR)
         }
-        if (options.beforeSend instanceof Function) {
+        if (isFunction(options.beforeSend)) {
             doCallback(options.beforeSend, XHR)
         }
     }
 
     function onSuccess(data) {
-        if (useGlobal && globalOptions.success instanceof Function) {
+        if (useGlobal && isFunction(globalOptions.success)) {
             doCallback(globalOptions.success, data, XHR ? XHR.status : undefined, XHR)
         }
-        if (options.success instanceof Function) {
+        if (isFunction(options.success)) {
             doCallback(options.success, data, XHR ? XHR.status : undefined, XHR)
         }
         onComplete()
     }
 
     function onError(error) {
-        if (useGlobal && globalOptions.error instanceof Function) {
+        if (useGlobal && isFunction(globalOptions.error)) {
             doCallback(globalOptions.error, XHR, XHR ? XHR.status : undefined, error)
         }
-        if (options.error instanceof Function) {
+        if (isFunction(options.error)) {
             doCallback(options.error, XHR, XHR ? XHR.status : undefined, error)
         }
         onComplete()
     }
 
     function onComplete() {
-        if (useGlobal && globalOptions.complete instanceof Function) {
+        if (useGlobal && isFunction(globalOptions.complete)) {
             doCallback(globalOptions.complete, XHR, XHR ? XHR.status : undefined)
         }
-        if (options.complete instanceof Function) {
+        if (isFunction(options.complete)) {
             doCallback(options.complete, XHR, XHR ? XHR.status : undefined)
-        }
-        if (options.complete instanceof Array) {
-            options.complete.forEach((fn) => {
-                doCallback(fn, XHR, XHR ? XHR.status : undefined)
-            })
         }
     }
 
@@ -324,11 +319,11 @@ function createOptions(userOptions, useGlobal) {
 
     options.type = options.type.toUpperCase()
 
-    if (useGlobal && globalOptions.urlFormatter instanceof Function) {
+    if (useGlobal && isFunction(globalOptions.urlFormatter)) {
         options.url = globalOptions.urlFormatter(options.url)
     }
 
-    if (useGlobal && globalOptions.dataFormatter instanceof Function) {
+    if (useGlobal && isFunction(globalOptions.dataFormatter)) {
         options.data = globalOptions.dataFormatter(options.data)
     }
 
@@ -362,7 +357,7 @@ function createOptions(userOptions, useGlobal) {
             break
         case CONSTANTS.DATA_TYPE.JSONP:
             options.data = data2QueryString(options.data)
-            if (useGlobal && !options.jsonpCallback && globalOptions.jsonpCallback instanceof Function) {
+            if (useGlobal && !options.jsonpCallback && isFunction(globalOptions.jsonpCallback)) {
                 options.jsonpCallback = globalOptions.jsonpCallback()
             }
             break
@@ -438,6 +433,10 @@ function data2QueryString(data) {
     } else {
         return ''
     }
+}
+
+function isFunction(fn) {
+    return typeof fn === 'function'
 }
 
 ajax.global = setGlobalOptions
