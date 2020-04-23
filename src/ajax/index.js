@@ -98,7 +98,6 @@ const ajax = function (userOptions) {
 
     // 创建options
     options = createOptions(userOptions, useGlobal)
-    console.log('options: ', options)
 
     if (!CONSTANTS.TYPES.includes(options.type)) {
         console.error('错误的请求类型type.')
