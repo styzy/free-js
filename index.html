@@ -7,6 +7,7 @@
         <title>
             <%= htmlWebpackPlugin.options.title %>
         </title>
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
         <style>
             body {
                 margin: 0;
@@ -28,15 +29,15 @@
         </div>
     </body>
     <script>
-        testAutoComplateInput()
-        // testAjax()
+        // testAutoComplateInput()
+        testAjax()
 
         function testAutoComplateInput() {
             var autoComplateInput = new free.components.AutoComplateInput('input', {
                 customInputEnable: false,
                 // suggestions: ['1', '2', '3'],
-                fetchSuggestions: function(value, setSuggestions) {
-                    window.setTimeout(function() {
+                fetchSuggestions: function (value, setSuggestions) {
+                    window.setTimeout(function () {
                         setSuggestions([
                             {
                                 value: value
@@ -75,59 +76,100 @@
                     }, 1000)
                 }
             })
-            autoComplateInput.onSelect = function(value) {
+            autoComplateInput.onSelect = function (value) {
                 console.log('select value: ', value)
             }
-            autoComplateInput.onCustomInputReset = function() {
+            autoComplateInput.onCustomInputReset = function () {
                 console.log('customInputReset value: ', this)
             }
         }
 
         function testAjax() {
+            free.ajax.global({
+                urlFormatter: function (url) {
+                    return url
+                },
+                // type: '',
+                // async: false,
+                // timeout: 1,
+                dataFormatter: function (data) {
+                    return data
+                },
+                dataFilter: function (data, type) {
+                    console.log('dataFilter global')
+                    return data
+                },
+                jsonpCallback: function () {
+                    return 'a1'
+                },
+                beforeSend: function (xhr) {
+                    console.log('beforeSend global')
+                    // xhr.setRequestHeader('token', '1')
+                },
+                success: function (res, status, xhr) {
+                    console.info('success global', res)
+                },
+                error: function (xhr, status, error) {
+                    console.log('error global', error)
+                },
+                complete: function (xhr, status) {
+                    console.log('complete global')
+                }
+            })
+
             var a = {}
+
             free.ajax({
                 url: 'http://rap2api.taobao.org/app/mock/229190/ajax.freejs.cn/test',
                 type: 'GET',
                 type: 'POST',
+                // global: false,
                 // xhr: function() {},
                 // async: false,
-                // timeout: 1,
+                // timeout: 0,
                 // context: a,
+                dataFilter: function (data, type) {
+                    console.log('dataFilter')
+                    // console.log('data: ', data)
+                    // console.log('type: ', type)
+                    return data
+                },
                 contentType: 'application/json; charset=UTF-8',
+                dataType: 'json',
                 // dataType: 'jsonp',
                 data: {
                     a: 1
                 },
                 // data: JSON.stringify({
-                //     a: {}
+                //     a: 1
                 // }),
                 // jsonp: 'a',
                 // jsonpCallback: 'cb',
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     console.log('beforeSend')
                     // console.log('xhr: ', xhr);
                 },
-                success: function(res, status, xhr) {
+                success: function (res, status, xhr) {
                     console.info('success', res)
                     // console.log(this);
                     // console.log('res: ', res);
                     // console.log('status: ', status);
                     // console.log('xhr: ', xhr);
                 },
-                error: function(xhr, status, error) {
-                    console.info('error')
+                error: function (xhr, status, error) {
+                    console.log('error: ', error)
                     // console.log(this);
                     // console.log('xhr: ', xhr);
                     // console.log('status: ', status);
                     // console.log('error: ', error);
                 },
                 complete: [
-                    function(xhr, status) {
+                    function (xhr, status) {
                         console.log('complete1')
                         // console.log('xhr: ', xhr);
                         // console.log('status: ', status);
                     },
-                    function(xhr, status) {
+                    function (xhr, status) {
                         console.log('complete2')
                         // console.log('xhr: ', xhr);
                         // console.log('status: ', status);
