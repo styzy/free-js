@@ -11,17 +11,29 @@ const CONSTANTS = {
         text: 'text/plain',
         xml: 'application/xml, text/xml'
     },
-    TYPES: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD']
+    TYPES: {
+        GET: 'GET',
+        POST: 'POST',
+        PUT: 'PUT',
+        DELETE: 'DELETE',
+        OPTIONS: 'OPTIONS',
+        PATCH: 'PATCH',
+        HEAD: 'HEAD'
+    },
+    CONTENT_TYPE: {
+        DEFAULT: 'application/x-www-form-urlencoded; charset=UTF-8',
+        APPLICATION_JSON: 'application/json; charset=UTF-8'
+    }
 }
 
 // 默认参数模板
 const defaultOptionsTemplate = {
     url: window.location.href,
-    type: 'GET',
+    type: CONSTANTS.TYPES.GET,
     // 布尔值，表示请求是否异步处理。默认是 true
     async: true,
     // 发送数据到服务器时所使用的内容类型。默认是："application/x-www-form-urlencoded"
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    contentType: CONSTANTS.CONTENT_TYPE.DEFAULT,
     // 预期的服务器响应的数据类型
     dataType: CONSTANTS.DATA_TYPE.JSON,
     // 规定要发送到服务器的数据
@@ -99,8 +111,8 @@ const ajax = function (userOptions) {
     // 创建options
     options = createOptions(userOptions, useGlobal)
 
-    if (!CONSTANTS.TYPES.includes(options.type)) {
-        console.error('错误的请求类型type.')
+    if (!ckeckType(options.type)) {
+        console.error('错误的请求类型type： ' + options.type)
         return
     }
 
@@ -155,7 +167,7 @@ const ajax = function (userOptions) {
 
         // 发送请求
         function send() {
-            if (options.type === 'POST') {
+            if (options.type === CONSTANTS.TYPES.POST) {
                 XHR.setRequestHeader('Content-type', options.contentType)
                 let acceptsArr = []
                 if (CONSTANTS.ACCEPTS[options.dataType]) {
@@ -332,12 +344,12 @@ function createOptions(userOptions, useGlobal) {
     }
     switch (options.dataType) {
         case CONSTANTS.DATA_TYPE.JSON:
-            if (options.type !== 'POST') {
-                options.contentType = defaultOptions.contentType
+            if (options.type !== CONSTANTS.TYPES.POST) {
+                options.contentType = CONSTANTS.CONTENT_TYPE.DEFAULT
             }
             if (options.contentType.includes('application/json')) {
                 if (options.processData) {
-                    if (typeof options.data !== 'string') {
+                    if (options.data && typeof options.data !== 'string') {
                         options.data = JSON.stringify(options.data)
                     }
                 }
@@ -350,8 +362,10 @@ function createOptions(userOptions, useGlobal) {
                     options.data = data2QueryString(options.data)
                 }
             }
-            if (options.type === 'GET') {
-                options.url += `${options.url.includes('?') ? '&' : '?'}${options.data}`
+            if (options.type === CONSTANTS.TYPES.GET) {
+                if (options.data) {
+                    options.url += `${options.url.includes('?') ? '&' : '?'}${options.data}`
+                }
                 options.data = null
             }
             break
@@ -411,6 +425,12 @@ function setGlobalOptions(options) {
     } catch (error) {
         console.error(error)
     }
+}
+
+function ckeckType(type) {
+    return Object.values(CONSTANTS.TYPES).some((t) => {
+        return type === t
+    })
 }
 
 /**
