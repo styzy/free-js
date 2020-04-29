@@ -24,13 +24,28 @@
     </head>
 
     <body>
+        123
         <div class="input">
             <input type="text" />
         </div>
     </body>
     <script>
+        testLoad()
         // testAutoComplateInput()
-        testAjax()
+        // testAjax()
+
+        function testLoad() {
+            free.utils.loadJs('/test.js')
+            free.load('/test.css', {
+                load: function (xml) {
+                    var xmlObject = free.utils.parseXml(xml)
+                    console.log(xmlObject)
+                },
+                error: function () {
+                    console.log('error')
+                }
+            })
+        }
 
         function testAutoComplateInput() {
             var autoComplateInput = new free.components.AutoComplateInput('input', {

@@ -1,3 +1,4 @@
+import createXMLHttpRequest from './createXMLHttpRequest'
 import deepClone from './deepClone'
 import fullScreen from './fullScreen'
 import getAbsoluteUrl from './getAbsoluteUrl'
@@ -12,10 +13,15 @@ import importNode from './importNode'
 import importTemplate from './importTemplate'
 import isIframeCrossOrigin from './isIframeCrossOrigin'
 import isParentNode from './isParentNode'
+import loadCss from './loadCss'
+import loadJs from './loadJs'
+import loadXml from './loadXml'
+import parseXml from './parseXml'
 import setCursorPosition from './setCursorPosition'
 import stopDefaultEvent from './stopDefaultEvent'
 import URLSearchParamsToObject from './URLSearchParamsToObject'
 
+export { createXMLHttpRequest }
 export { deepClone }
 export { fullScreen }
 export { getAbsoluteUrl }
@@ -30,28 +36,37 @@ export { importNode }
 export { importTemplate }
 export { isIframeCrossOrigin }
 export { isParentNode }
+export { loadCss }
+export { loadJs }
+export { loadXml }
+export { parseXml }
 export { setCursorPosition }
 export { stopDefaultEvent }
 export { URLSearchParamsToObject }
 
 const utils = {
-	deepClone,
-	fullScreen,
-	getAbsoluteUrl,
-	getCursorPosition,
-	getOffsetLeft,
-	getOffsetTop,
-	getScrollLeft,
-	getScrollTop,
-	getUrlQueryParams,
-	getUrlSearchParams,
-	importNode,
-	importTemplate,
-	isIframeCrossOrigin,
-	isParentNode,
-	setCursorPosition,
-	stopDefaultEvent,
-	URLSearchParamsToObject
+    createXMLHttpRequest,
+    deepClone,
+    fullScreen,
+    getAbsoluteUrl,
+    getCursorPosition,
+    getOffsetLeft,
+    getOffsetTop,
+    getScrollLeft,
+    getScrollTop,
+    getUrlQueryParams,
+    getUrlSearchParams,
+    importNode,
+    importTemplate,
+    isIframeCrossOrigin,
+    isParentNode,
+    loadCss,
+    loadJs,
+    loadXml,
+    parseXml,
+    setCursorPosition,
+    stopDefaultEvent,
+    URLSearchParamsToObject
 }
 
 export default utils

@@ -1,3 +1,5 @@
+import { createXMLHttpRequest } from '../utils'
+
 const CONSTANTS = {
     DATA_TYPE: {
         JSON: 'json',
@@ -156,7 +158,7 @@ const ajax = function (userOptions) {
         XHR = isFunction(options.xhr) ? options.xhr() : createXMLHttpRequest()
 
         if (!XHR) {
-            console.error('浏览器不支持XmlHttpRequest对象，无法使用ajax功能.')
+            console.error('浏览器不支持XMLHttpRequest对象，无法使用ajax功能.')
             return
         }
 
@@ -336,19 +338,6 @@ const ajax = function (userOptions) {
             fn(...args)
         }
     }
-}
-
-/**
- * 创建XmlHttpRequest实例对象
- */
-function createXMLHttpRequest() {
-    var XHR = null
-    if (window.XMLHttpRequest) {
-        XHR = new XMLHttpRequest()
-    } else if (window.ActiveXObject) {
-        XHR = new ActiveXObject('Microsoft.XMLHTTP')
-    }
-    return XHR
 }
 
 /**
