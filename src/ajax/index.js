@@ -461,7 +461,7 @@ function data2QueryString(data) {
     if (!data) return ''
     if (typeof data === 'string') {
         return data
-    } else if (typeof data === 'function') {
+    } else if (typeof data === 'object') {
         var array = []
         for (const key in data) {
             if (data.hasOwnProperty(key)) {

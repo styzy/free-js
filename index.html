@@ -30,9 +30,9 @@
         </div>
     </body>
     <script>
-        testLoad()
+        // testLoad()
         // testAutoComplateInput()
-        // testAjax()
+        testAjax()
 
         function testLoad() {
             free.utils.loadJs('/test.js')
@@ -100,6 +100,15 @@
         }
 
         function testAjax() {
+            free.ajax({
+                type: 'POST',
+                url: '',
+                dataType: 'json',
+                data: {
+                    shippingOrderId: '222'
+                }
+            })
+            return
             free.ajax.global({
                 urlFormatter: function (url) {
                     return url
