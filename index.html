@@ -14,7 +14,7 @@
             }
 
             .input {
-                padding: 200px 200px 2000px;
+                padding: 200px 200px 200px;
             }
 
             input {
@@ -28,11 +28,23 @@
         <div class="input">
             <input type="text" />
         </div>
+        <button id="setClipboard" type="button">复制到剪切板</button>
+        <button id="getClipboard" type="button">读取剪切板</button>
     </body>
     <script>
+        testClipboard()
         // testLoad()
         // testAutoComplateInput()
-        testAjax()
+        // testAjax()
+
+        function testClipboard() {
+            free('#setClipboard').addEventListener('click', function () {
+                free.utils.setClipboard(Date.now())
+            })
+            free('#getClipboard').addEventListener('click', function () {
+                console.log('clipboard', free.utils.getClipboard())
+            })
+        }
 
         function testLoad() {
             free.utils.loadJs('/test.js')

@@ -17,6 +17,7 @@ import loadCss from './loadCss'
 import loadJs from './loadJs'
 import loadXml from './loadXml'
 import parseXml from './parseXml'
+import setClipboard from './setClipboard'
 import setCursorPosition from './setCursorPosition'
 import stopDefaultEvent from './stopDefaultEvent'
 import URLSearchParamsToObject from './URLSearchParamsToObject'
@@ -40,6 +41,7 @@ export { loadCss }
 export { loadJs }
 export { loadXml }
 export { parseXml }
+export { setClipboard }
 export { setCursorPosition }
 export { stopDefaultEvent }
 export { URLSearchParamsToObject }
@@ -64,6 +66,7 @@ const utils = {
     loadJs,
     loadXml,
     parseXml,
+    setClipboard,
     setCursorPosition,
     stopDefaultEvent,
     URLSearchParamsToObject
