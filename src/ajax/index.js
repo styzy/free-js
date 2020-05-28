@@ -108,7 +108,26 @@ let globalOptions = {
 const ajax = function (userOptions) {
     let options = null,
         XHR = null,
-        useGlobal = userOptions.global !== false
+        useGlobal = userOptions.global !== false,
+        promise = {
+            success: null,
+            error: null,
+            complete: null
+        },
+        promiseHandler = {
+            success(cb) {
+                promise.success = cb
+                return this
+            },
+            error(cb) {
+                promise.error = cb
+                return this
+            },
+            complete(cb) {
+                promise.complete = cb
+                return this
+            }
+        }
 
     // 创建options
     options = createOptions(userOptions, useGlobal)
@@ -128,26 +147,6 @@ const ajax = function (userOptions) {
         default:
             break
     }
-
-    let promise = {
-            success: null,
-            error: null,
-            complete: null
-        },
-        promiseHandler = {
-            success(cb) {
-                promise.success = cb
-                return this
-            },
-            error(cb) {
-                promise.error = cb
-                return this
-            },
-            complete(cb) {
-                promise.complete = cb
-                return this
-            }
-        }
 
     return promiseHandler
 
