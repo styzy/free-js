@@ -35,7 +35,8 @@
         // testClipboard()
         // testLoad()
         // testAutoComplateInput()
-        testAjax()
+        // testAjax()
+        testColor()
 
         function testClipboard() {
             free('#setClipboard').addEventListener('click', function () {
@@ -214,6 +215,18 @@
                 .complete(function (xhr, status) {
                     console.log('complete promise')
                 })
+        }
+
+        function testColor() {
+            window.color = free.color('red')
+            window.color1 = free.color('rgba(1,2,3,4)')
+
+            color.setAlpha(0.5)
+            color.alpha = 1
+            console.log(color.toHex())
+            console.log(color.toAlphaHex())
+            console.log(color1.toRgb())
+            console.log(color.toRgba())
         }
     </script>
 </html>
