@@ -1,5 +1,6 @@
 import createXMLHttpRequest from './createXMLHttpRequest'
 import deepClone from './deepClone'
+import download from './download'
 import fullScreen from './fullScreen'
 import getAbsoluteUrl from './getAbsoluteUrl'
 import getCursorPosition from './getCursorPosition'
@@ -24,6 +25,7 @@ import URLSearchParamsToObject from './URLSearchParamsToObject'
 
 export { createXMLHttpRequest }
 export { deepClone }
+export { download }
 export { fullScreen }
 export { getAbsoluteUrl }
 export { getCursorPosition }
@@ -49,6 +51,7 @@ export { URLSearchParamsToObject }
 const utils = {
     createXMLHttpRequest,
     deepClone,
+    download,
     fullScreen,
     getAbsoluteUrl,
     getCursorPosition,
