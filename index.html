@@ -32,11 +32,22 @@
         <button id="getClipboard" type="button">读取剪切板</button>
     </body>
     <script>
+        // testAwesome()
         // testClipboard()
         // testLoad()
         // testAutoComplateInput()
         // testAjax()
-        testColor()
+        // testColor()
+
+        function testAwesome() {
+            free.awesome()
+            var newEl = document.createElement('a'),
+                targetEl = free('button')
+            console.log('targetEl: ', targetEl)
+            newEl.href = 'http://stranger.ren'
+            newEl.innerText = 'stranger.ren'
+            document.body.insertBefore(newEl, targetEl)
+        }
 
         function testClipboard() {
             free('#setClipboard').addEventListener('click', function () {
