@@ -1,5 +1,6 @@
 import Core from './Core'
 import ajax from './ajax'
+import forEach from './forEach'
 import load from './load'
 import utils from './utils'
 import Color from './color'
@@ -13,6 +14,7 @@ const Free = function (devMode) {
 
     core.utils = utils
     core.ajax = ajax
+    core.forEach = forEach
     core.load = load
     core.components = components
     core.color = (...args) => {

@@ -4,9 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>
-            <%= htmlWebpackPlugin.options.title %>
-        </title>
+        <title><%= htmlWebpackPlugin.options.title %></title>
         <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
         <style>
             body {
@@ -32,12 +30,24 @@
         <button id="getClipboard" type="button">读取剪切板</button>
     </body>
     <script>
+        testForEach()
         // testAwesome()
         // testClipboard()
         // testLoad()
         // testAutoComplateInput()
         // testAjax()
         // testColor()
+
+        function testForEach() {
+            var array = ['a', 'b', 'c']
+            free.forEach(array, function (item, index, _break) {
+                console.log(item)
+                // console.log('index: ', index)
+                // console.log('_break: ', _break)
+                if (item === 'b') return _break
+            })
+            console.log('d')
+        }
 
         function testAwesome() {
             free.awesome()
