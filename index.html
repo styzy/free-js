@@ -40,11 +40,12 @@
 
         function testForEach() {
             var array = ['a', 'b', 'c']
+            // var array = [document.createElement('div'), document.createElement('a'), document.createElement('span')]
             free.forEach(array, function (item, index, _break) {
                 console.log(item)
                 // console.log('index: ', index)
                 // console.log('_break: ', _break)
-                if (item === 'b') return _break
+                // if (item === 'b') return _break
             })
             console.log('d')
         }

@@ -1,4 +1,4 @@
-export const version = '1.6.0'
+export const version = '1.6.1'
 export const buildTime = timeFormat(BUILD_TIME)
 export const githubUrl = 'https://github.com/styzy/free-js'
 
