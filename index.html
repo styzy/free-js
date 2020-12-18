@@ -39,15 +39,23 @@
         // testColor()
 
         function testForEach() {
-            var array = ['a', 'b', 'c']
-            // var array = [document.createElement('div'), document.createElement('a'), document.createElement('span')]
-            free.forEach(array, function (item, index, _break) {
-                console.log(item)
-                // console.log('index: ', index)
-                // console.log('_break: ', _break)
-                // if (item === 'b') return _break
+            // var array = 9
+            var array = [document.createElement('div'), document.createElement('a'), document.createElement('span')]
+            var returnData = free.forEach(array, function (item, index, control) {
+                console.log('item: ', item)
+                console.log('index: ', index)
+                cl
+                // console.log('control: ', control)
+                // console.log('control.break: ', control.break)
+                // console.log('control.continue: ', control.continue)
+                // console.log('control.return: ', control.return)
+                if (index == 1) {
+                    return control.return('asfajfas')
+                    // return control.break()
+                    console.log(1)
+                }
             })
-            console.log('d')
+            console.log('returnData: ', returnData)
         }
 
         function testAwesome() {
