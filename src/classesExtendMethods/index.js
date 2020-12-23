@@ -1,11 +1,11 @@
 import DateMethods from './Date'
 import StringMethods from './String'
-import HTMLElementMethods from './HTMLElement'
+import ElementMethods from './Element'
 
 const classes = {
     String: StringMethods,
     Date: DateMethods,
-    HTMLElement: HTMLElementMethods
+    Element: ElementMethods
 }
 
 export default classes

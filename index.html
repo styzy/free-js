@@ -30,8 +30,8 @@
         <button id="getClipboard" type="button">读取剪切板</button>
     </body>
     <script>
-        testForEach()
-        // testAwesome()
+        // testForEach()
+        testAwesome()
         // testClipboard()
         // testLoad()
         // testAutoComplateInput()
@@ -44,7 +44,6 @@
             var returnData = free.forEach(array, function (item, index, control) {
                 console.log('item: ', item)
                 console.log('index: ', index)
-                cl
                 // console.log('control: ', control)
                 // console.log('control.break: ', control.break)
                 // console.log('control.continue: ', control.continue)
@@ -62,10 +61,10 @@
             free.awesome()
             var newEl = document.createElement('a'),
                 targetEl = free('button')
-            console.log('targetEl: ', targetEl)
+            // console.log('targetEl: ', targetEl)
             newEl.href = 'http://stranger.ren'
             newEl.innerText = 'stranger.ren'
-            document.body.insertBefore(newEl, targetEl)
+            document.body.insertAfter(newEl, targetEl)
         }
 
         function testClipboard() {

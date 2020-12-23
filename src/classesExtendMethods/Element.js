@@ -1,5 +1,12 @@
+import { findDom } from '../utils'
+
 const methods = {
+    find,
     insertAfter
+}
+
+function find(selector, returnNodeList) {
+    return findDom(selector, returnNodeList, this)
 }
 
 function insertAfter(newElement, targetElement) {

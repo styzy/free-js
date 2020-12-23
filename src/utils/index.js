@@ -1,6 +1,7 @@
 import createXMLHttpRequest from './createXMLHttpRequest'
 import deepClone from './deepClone'
 import download from './download'
+import findDom from './findDom'
 import fullScreen from './fullScreen'
 import getAbsoluteUrl from './getAbsoluteUrl'
 import getCursorPosition from './getCursorPosition'
@@ -23,35 +24,11 @@ import setCursorPosition from './setCursorPosition'
 import stopDefaultEvent from './stopDefaultEvent'
 import URLSearchParamsToObject from './URLSearchParamsToObject'
 
-export { createXMLHttpRequest }
-export { deepClone }
-export { download }
-export { fullScreen }
-export { getAbsoluteUrl }
-export { getCursorPosition }
-export { getOffsetLeft }
-export { getOffsetTop }
-export { getScrollLeft }
-export { getScrollTop }
-export { getUrlQueryParams }
-export { getUrlSearchParams }
-export { importNode }
-export { importTemplate }
-export { isIframeCrossOrigin }
-export { isParentNode }
-export { loadCss }
-export { loadJs }
-export { loadXml }
-export { parseXml }
-export { setClipboard }
-export { setCursorPosition }
-export { stopDefaultEvent }
-export { URLSearchParamsToObject }
-
-const utils = {
+export {
     createXMLHttpRequest,
     deepClone,
     download,
+    findDom,
     fullScreen,
     getAbsoluteUrl,
     getCursorPosition,
@@ -75,4 +52,30 @@ const utils = {
     URLSearchParamsToObject
 }
 
-export default utils
+export default {
+    createXMLHttpRequest,
+    deepClone,
+    download,
+    findDom,
+    fullScreen,
+    getAbsoluteUrl,
+    getCursorPosition,
+    getOffsetLeft,
+    getOffsetTop,
+    getScrollLeft,
+    getScrollTop,
+    getUrlQueryParams,
+    getUrlSearchParams,
+    importNode,
+    importTemplate,
+    isIframeCrossOrigin,
+    isParentNode,
+    loadCss,
+    loadJs,
+    loadXml,
+    parseXml,
+    setClipboard,
+    setCursorPosition,
+    stopDefaultEvent,
+    URLSearchParamsToObject
+}

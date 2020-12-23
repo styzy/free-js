@@ -4,33 +4,38 @@ import forEach from './forEach'
 import load from './load'
 import utils from './utils'
 import Color from './color'
-import Log from './Log'
+import Logger from './Logger'
 import components from './components'
 import classesExtendMethdos from './classesExtendMethods'
 import logo from './logo'
 
-const Free = function (devMode) {
-    let core = new Core(!!devMode)
+class Free {
+    constructor(devMode = !!devMode) {
+        const core = new Core(devMode)
 
-    core.utils = utils
-    core.ajax = ajax
-    core.forEach = forEach
-    core.load = load
-    core.components = components
-    core.color = (...args) => {
-        return new Color(...args)
+        core.ajax = ajax
+        core.awesome = awesome
+        core.color = color
+        core.components = components
+        core.forEach = forEach
+        core.load = load
+        core.logger = new Logger(core)
+        core.utils = utils
+        core.devMode && logo(core)
+        return core
     }
-    core.Log = () => {
-        return new Log({ devMode: core.devMode })
-    }
-    core.awesome = () => {
-        return applyClassesExtendMethdos.call(core, classesExtendMethdos)
-    }
-    core.devMode && logo(core)
-    return core
 }
 
-function applyClassesExtendMethdos(classesExtendMethdos) {
+const awesome = () => {
+    applyClassesExtendMethdos()
+    return 'owesome'
+}
+
+const color = (...args) => {
+    return new Color(...args)
+}
+
+const applyClassesExtendMethdos = () => {
     for (const className in classesExtendMethdos) {
         if (classesExtendMethdos.hasOwnProperty(className)) {
             if (window[className]) {
@@ -43,7 +48,6 @@ function applyClassesExtendMethdos(classesExtendMethdos) {
             }
         }
     }
-    return 'owesome'
 }
 
 export { Free }
