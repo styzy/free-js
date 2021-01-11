@@ -83,6 +83,7 @@ class AutoComplateInput {
         el.style.top = `${this.position.y}px`
         el.style.left = `${this.position.x}px`
         el.style.maxHeight = `${this.config.maxHeight}px`
+        el.style.zIndex = `${this.config.suggestionZIndex}`
 
         let el_loading = document.createElement('div')
         el_loading.className = CONSTANTS.CLASS_NAME.LOADING
@@ -103,7 +104,7 @@ class AutoComplateInput {
     #createSuggestionItem(suggestions) {
         if (!this.#el_suggestion_list) return
 
-        suggestions.forEach(suggestion => {
+        suggestions.forEach((suggestion) => {
             let el_suggestion = createSuggestion.call(this, suggestion)
             if (el_suggestion) {
                 this.#el_suggestion_list.appendChild(el_suggestion)
@@ -199,7 +200,7 @@ class AutoComplateInput {
         this.#reset()
         this.#show()
         if (typeof this.config.fetchSuggestions === 'function') {
-            this.config.fetchSuggestions(this.el_input.value, suggestions => {
+            this.config.fetchSuggestions(this.el_input.value, (suggestions) => {
                 this.#createSuggestionItem(suggestions)
                 this.#handleLoading(false)
             })
