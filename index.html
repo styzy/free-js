@@ -18,10 +18,27 @@
             input {
                 margin: 10px;
             }
+            .tip-test {
+                text-align: center;
+            }
+            .tip-test button {
+                display: block;
+                width: 300px;
+                padding: 30px 0;
+                margin: 100px auto;
+                line-height: 30px;
+            }
         </style>
     </head>
 
     <body>
+        <div id="tipTest" class="tip-test">
+            <button id="tip1">上左气泡</button>
+            <button id="tip2">左下气泡</button>
+            <button id="tip3">右上气泡,动画时间2000毫秒，最大宽度100px,背景色#0691F4，文本颜色#FFFFFF</button>
+            <button id="tip4">这是一个支持自定义元素的右下气泡</button>
+            <button id="tip5" style="position: fixed; left: 30px; top: 200px">下右气泡,点击按钮改变气泡内容</button>
+        </div>
         123
         <div class="input">
             <input type="text" />
@@ -30,13 +47,67 @@
         <button id="getClipboard" type="button">读取剪切板</button>
     </body>
     <script>
+        testTip()
         // testForEach()
         // testAwesome()
         // testClipboard()
         // testLoad()
-        testAutoComplateInput()
+        // testAutoComplateInput()
         // testAjax()
         // testColor()
+
+        function testTip() {
+            var tip1 = new free.components.Tip('#tip1', '这是一个上左气泡')
+            var tip2 = new free.components.Tip('#tip2', '这是一个左下气泡', {
+                anchor: 'left-bottom'
+            })
+            var tip3 = new free.components.Tip(
+                '#tip3',
+                function () {
+                    return '这是一个通过render方法渲染的右上气泡'
+                },
+                {
+                    anchor: 'right-top',
+                    maxWidth: 100,
+                    animateDuration: 2000,
+                    backgroundColor: '#0691F4',
+                    color: '#FFFFFF'
+                }
+            )
+            var tip4 = new free.components.Tip(
+                '#tip4',
+                function () {
+                    var el = document.createElement('div'),
+                        el_content = document.createElement('spam'),
+                        el_icon = document.createElement('img')
+
+                    el_content.innerText = '这是一个支持自定义元素的右下气泡'
+
+                    el_icon.src =
+                        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACHElEQVQ4T62Vy2sTYRTFz5kEhXRsQW2SYroSxExKobpwLYqKIJiKWx8g+Ae4EhUFqzvduREf0YW7RhcqLSi4EroxUJJowV1jNaMRZCaB1Mx3ZdJMnaSTh8VZ3nvu+b57ZvgN0eWp/kiehMIEgCkBDrgyAgsActCQH9r58UXQKDuLtdJkQm1pPABwtNthrfq8thq+EEkslvy6NkO7nDoDypM+Ru1t4Vk9VnjqFdcN7W/GIWh4809mnljhsB4vvm3FAvxaTm0PbZVKFzMLIi+pURfBiW4HOnXuGBkv/Gze0DaNxwDOdYoJuRehuszRJcvtVb/v3S8Sug3IkQDjjB4tnmetPDGtqGY3mBErlhPeE48vVmvlZLpBbWQ4WsjUKynjtyOFoJtqop2iZaZmCLkSYLigFOaocQkiz5r5kBeHRgv3rbJxg8T1zhkBb9E2jVcAjg/yMsRRB7eNfXpnmaksIemAmdeu4QqAsd6GfKiEj4Zj+ffNLE3jswC7A2a+0jaTJYC7ehnq0WLz5dUqkwlxGncFOB2sly+smslZAacHMbRNQ3rpCMm6hlcFvDlIhv00hFyjCwFRfP5fbqhJ2vuw53rBwMuwz8rzerR4bC3sNcIs91upV19bDY+75PkLh82QxjvBR5x2fG2GOD7SrNPGv0qLPHeCYNGxcsap85JLGH99A7G9pgsNh7KPkCn3N9Cq5wTMhYQfIrF8NijTP6xX2Cd+ufrIAAAAAElFTkSuQmCC'
+                    el_icon.style.marginRight = '10px'
+
+                    el.appendChild(el_icon)
+                    el.appendChild(el_content)
+
+                    return el
+                },
+                {
+                    anchor: 'right-bottom'
+                }
+            )
+            var tip5 = new free.components.Tip('#tip5', '这是一个下右气泡', {
+                anchor: 'bottom-right'
+            })
+            free('#tip5').addEventListener('click', function () {
+                tip5.content = '1秒后自动再次变化'
+                window.setTimeout(function () {
+                    tip5.content = function () {
+                        return '你看，变了吧'
+                    }
+                }, 1000)
+            })
+        }
 
         function testForEach() {
             // var array = 9

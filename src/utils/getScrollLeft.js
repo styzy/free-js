@@ -1,5 +1,5 @@
-const getScrollLeft = function() {
-	return (((t = document.documentElement) || (t = document.body.parentNode)) && typeof t.scrollLeft == 'number' ? t : document.body).scrollLeft
+const getScrollLeft = function () {
+    return document.documentElement.scrollLeft || window.pageXOffset || document.body.scrollLeft
 }
 
 export default getScrollLeft

@@ -1,0 +1,98 @@
+.free-components-tip
+	position absolute
+	animation-name fadeIn
+	word-break break-all
+.free-components-tip-top
+	&-left,
+	&-right
+		margin-bottom 10px
+.free-components-tip-bottom
+	&-left,
+	&-right
+		margin-top 10px
+.free-components-tip-left
+	&-top,
+	&-bottom
+		margin-right 10px
+.free-components-tip-right
+	&-top,
+	&-bottom
+		margin-left 10px
+.free-components-tip-wrapper
+	position relative
+	padding 10px
+	font-size 14px
+.free-components-tip-angle
+	position absolute
+	width 0
+	height 0
+	z-index 1
+.free-components-tip-angle-top
+	&-left,
+	&-right
+		top 100%
+		border-top-width 5px
+		border-top-style solid
+		border-left-width 5px
+		border-left-style solid
+		border-left-color transparent !important
+		border-right-width 5px
+		border-right-style solid
+		border-right-color transparent !important
+	&-left
+		left 5px
+	&-right
+		right 5px
+.free-components-tip-angle-bottom
+	&-left,
+	&-right
+		bottom 100%
+		border-bottom-width 5px
+		border-bottom-style solid
+		border-left-width 5px
+		border-left-style solid
+		border-left-color transparent !important
+		border-right-width 5px
+		border-right-style solid
+		border-right-color transparent !important
+	&-left
+		left 5px
+	&-right
+		right 5px
+.free-components-tip-angle-left
+	&-top,
+	&-bottom
+		left 100%
+		border-left-width 5px
+		border-left-style solid
+		border-top-width 5px
+		border-top-style solid
+		border-top-color transparent !important
+		border-bottom-width 5px
+		border-bottom-style solid
+		border-bottom-color transparent !important
+	&-top
+		top 5px
+	&-bottom
+		bottom 5px
+.free-components-tip-angle-right
+	&-top,
+	&-bottom
+		right 100%
+		border-right-width 5px
+		border-right-style solid
+		border-top-width 5px
+		border-top-style solid
+		border-top-color transparent !important
+		border-bottom-width 5px
+		border-bottom-style solid
+		border-bottom-color transparent !important
+	&-top
+		top 5px
+	&-bottom
+		bottom 5px
+@keyframes fadeIn
+	0%
+		opacity 0
+	100%
+		opacity 1

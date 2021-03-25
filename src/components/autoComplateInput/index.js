@@ -3,13 +3,6 @@ import { getOffsetLeft, getOffsetTop, isParentNode, stopDefaultEvent } from '../
 import './assets/stylus/index.styl'
 
 class AutoComplateInput {
-    #el_input = null
-    #el = null
-    #el_suggestion_list = null
-    #el_loading = null
-    #fetchTimer = null
-    #onSelect = null
-    #onCustomInputReset = null
     #config = {
         suggestions: [],
         suggestionValueKey: 'value',
@@ -20,9 +13,19 @@ class AutoComplateInput {
         customInputEnable: true,
         maxHeight: 270
     }
+    #el_input = null
+    #el = null
+    #el_suggestion_list = null
+    #el_loading = null
+    #fetchTimer = null
+    #onSelect = null
+    #onCustomInputReset = null
     #isCustomInput = false
     #isShow = false
     #_hideHandler = this.#hideHandler.bind(this)
+    get config() {
+        return Object.assign({}, this.#config)
+    }
     get el_input() {
         return this.#el_input
     }
@@ -41,9 +44,6 @@ class AutoComplateInput {
         if (value instanceof Function) {
             this.#onCustomInputReset = value
         }
-    }
-    get config() {
-        return Object.assign({}, this.#config)
     }
     get size() {
         if (this.el_input) {
