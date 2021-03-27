@@ -1,5 +1,6 @@
 import createXMLHttpRequest from './createXMLHttpRequest'
 import deepClone from './deepClone'
+import deepCloneFunction from './deepCloneFunction'
 import download from './download'
 import findDom from './findDom'
 import fullScreen from './fullScreen'
@@ -22,11 +23,13 @@ import parseXml from './parseXml'
 import setClipboard from './setClipboard'
 import setCursorPosition from './setCursorPosition'
 import stopDefaultEvent from './stopDefaultEvent'
+import typeOf from './typeOf'
 import URLSearchParamsToObject from './URLSearchParamsToObject'
 
 export {
     createXMLHttpRequest,
     deepClone,
+    deepCloneFunction,
     download,
     findDom,
     fullScreen,
@@ -49,12 +52,14 @@ export {
     setClipboard,
     setCursorPosition,
     stopDefaultEvent,
+    typeOf,
     URLSearchParamsToObject
 }
 
 export default {
     createXMLHttpRequest,
     deepClone,
+    deepCloneFunction,
     download,
     findDom,
     fullScreen,
@@ -77,5 +82,6 @@ export default {
     setClipboard,
     setCursorPosition,
     stopDefaultEvent,
+    typeOf,
     URLSearchParamsToObject
 }

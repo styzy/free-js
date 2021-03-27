@@ -1,49 +1,28 @@
-// 深度克隆
-const deepClone = function(data) {
-    var t = type(data),
-        o,
-        i,
-        ni
+import typeOf from './typeOf'
 
-    if (t === 'array') {
-        o = []
-    } else if (t === 'object') {
-        o = {}
+const deepClone = function (param) {
+    let type = typeOf(param),
+        newParam
+
+    if (type === 'Array') {
+        newParam = []
+    } else if (type === 'Object') {
+        newParam = {}
     } else {
-        return data
+        return param
     }
 
-    if (t === 'array') {
-        for (i = 0, ni = data.length; i < ni; i++) {
-            o.push(deepClone(data[i]))
+    if (type === 'Array') {
+        for (let index = 0, length = param.length; index < length; index++) {
+            newParam.push(deepClone(param[index]))
         }
-        return o
-    } else if (t === 'object') {
-        for (i in data) {
-            o[i] = deepClone(data[i]);
+        return newParam
+    } else if (type === 'Object') {
+        for (const key in param) {
+            newParam[key] = deepClone(param[key])
         }
-        return o
+        return newParam
     }
-}
-
-function type(obj) {
-    var toString = Object.prototype.toString
-    var map = {
-        '[object Boolean]': 'boolean',
-        '[object Number]': 'number',
-        '[object String]': 'string',
-        '[object Function]': 'function',
-        '[object Array]': 'array',
-        '[object Date]': 'date',
-        '[object RegExp]': 'regExp',
-        '[object Undefined]': 'undefined',
-        '[object Null]': 'null',
-        '[object Object]': 'object'
-    }
-    if (obj instanceof Element) {
-        return 'element'
-    }
-    return map[toString.call(obj)]
 }
 
 export default deepClone
