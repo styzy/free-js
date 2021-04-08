@@ -1,3 +1,5 @@
+import { typeOf } from '../utils'
+
 const control = {
     break: Symbol('break'),
     continue: Symbol('continue')
@@ -34,19 +36,30 @@ class Control {
 }
 
 const forEach = function (param = [], fn = () => {}) {
-    let forFn
     try {
-        if (param instanceof Array) forFn = forArray
-        if (param instanceof NodeList) forFn = forNodeList
-        if (isNumber(param)) forFn = forNumber
+        const forFn = getForFn(param)
         if (!forFn) throw '第一个参数支持Number、Array和NodeList类型'
-        if (!(fn instanceof Function)) throw '第二个参数必须为Function类型'
+        if (typeOf(fn) !== 'Function') throw '第二个参数必须为Function类型'
+        return forFn(param, fn)
     } catch (error) {
         console.error(`forEach error: ${error}`)
         return
     }
+}
 
-    return forFn(param, fn)
+function getForFn(param) {
+    const type = typeOf(param)
+
+    switch (type) {
+        case 'Array':
+            return forArray
+        case 'Number':
+            return forNumber
+        case 'NodeList':
+            return forNodeList
+        default:
+            return
+    }
 }
 
 function forArray(array, fn) {

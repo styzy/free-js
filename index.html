@@ -47,8 +47,8 @@
         <button id="getClipboard" type="button">读取剪切板</button>
     </body>
     <script>
-        testTip()
-        // testForEach()
+        // testTip()
+        testForEach()
         // testAwesome()
         // testClipboard()
         // testLoad()
@@ -111,7 +111,8 @@
 
         function testForEach() {
             // var array = 9
-            var array = [document.createElement('div'), document.createElement('a'), document.createElement('span')]
+            // var array = [document.createElement('div'), document.createElement('a'), document.createElement('span')]
+            // var array = document.querySelectorAll('div')
             var returnData = free.forEach(array, function (item, index, control) {
                 console.log('item: ', item)
                 console.log('index: ', index)
@@ -119,11 +120,11 @@
                 // console.log('control.break: ', control.break)
                 // console.log('control.continue: ', control.continue)
                 // console.log('control.return: ', control.return)
-                if (index == 1) {
-                    return control.return('asfajfas')
-                    // return control.break()
-                    console.log(1)
-                }
+                // if (index == 1) {
+                //     return control.return('asfajfas')
+                //     // return control.break()
+                //     console.log(1)
+                // }
             })
             console.log('returnData: ', returnData)
         }
