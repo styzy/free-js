@@ -98,8 +98,4 @@ function forNodeList(nodeList, fn) {
     }
 }
 
-function isNumber(number) {
-    return !isNaN(new Number(number))
-}
-
 export default forEach

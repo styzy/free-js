@@ -1,16 +1,17 @@
-const download = function (url, { fileName = getFileName(url), headers = {}, onSuccess = () => {} } = {}) {
+const download = function (url, { allowCrossOrigin = true, fileName = getFileName(url), headers = {}, onSuccess = () => {} } = {}) {
     try {
-        // if (checkOrigin(url)) {
-        // 同域
-        let el = document.createElement('a')
-        el.setAttribute('download', fileName)
-        el.href = url
-        el.click()
-        onSuccess(fileName)
-        // } else {
-        //     // 跨域
-        //     crossOriginDownload()
-        // }
+        if (checkOrigin(url) || !allowCrossOrigin) {
+            // 同域
+            let el = document.createElement('a')
+            el.setAttribute('download', fileName)
+            // el.target = '_blank'
+            el.href = url
+            el.click()
+            onSuccess(fileName)
+        } else {
+            // 跨域
+            crossOriginDownload()
+        }
     } catch (error) {
         console.error('free download error:\n', error)
     }
