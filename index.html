@@ -48,15 +48,21 @@
     </body>
     <script>
         // testTip()
-        testForEach()
+        // testForEach()
         // testAwesome()
         // testClipboard()
         // testLoad()
-        // testAutoComplateInput()
+        testAutoComplateInput()
         // testAjax()
         // testColor()
 
         function testTip() {
+            var el_tip0 = document.createElement('span')
+            el_tip0.innerText = '动态元素'
+            document.body.insertBefore(el_tip0, document.body.children[0])
+            var tip0 = new free.components.Tip(el_tip0, '这是一个动态插入元素的下右气泡', {
+                anchor: 'bottom-right'
+            })
             var tip1 = new free.components.Tip('#tip1', '这是一个上左气泡')
             var tip2 = new free.components.Tip('#tip2', '这是一个左下气泡', {
                 anchor: 'left-bottom'

@@ -1,5 +1,5 @@
 import CONSTANTS from './CONSTANTS'
-import { getScrollTop, getScrollLeft } from '../../utils'
+import { getScrollTop, getScrollLeft, typeOf } from '../../utils'
 import './assets/stylus/index.styl'
 
 class Tip {
@@ -13,6 +13,7 @@ class Tip {
         showOnHover: true,
         zIndex: 999
     }
+    #content = ''
     #el = null
     #el_tip = null
     #el_content = null
@@ -20,45 +21,31 @@ class Tip {
         return Object.assign({}, this.#config)
     }
     set content(content) {
-        if (!this.#el_content) return
-
-        this.#el_content.innerHTML = ''
-
-        if (content instanceof Function) {
+        if (typeOf(content) === 'Function') {
             content = content()
         }
 
-        if (typeof content === 'string') {
-            this.#el_content.innerHTML = content
-        }
+        this.#content = content
 
-        if (content instanceof HTMLElement) {
-            this.#el_content.appendChild(content)
-        }
+        if (!this.#el_content) return
+
+        this.#renderContent()
+    }
+    get content() {
+        return this.#content
     }
     constructor(el, content = '', customOpts = {}) {
-        if (typeof el === 'string') {
+        if (typeOf(el) === 'String') {
             el = document.querySelector(el)
         }
 
         this.#el = el
         this.#config = Object.assign(this.#config, customOpts)
 
-        this.#render()
-
         this.content = content
 
         if (this.config.showOnHover) {
             this.#bindHoverHandler()
-        }
-
-        this.#windowResizeFix()
-    }
-    #windowResizeFix() {
-        if (this.#el.style.position === 'fixed') {
-            window.addEventListener('resize', () => {
-                this.#render()
-            })
         }
     }
     #bindHoverHandler() {
@@ -92,6 +79,7 @@ class Tip {
         el_angle.style.borderColor = this.config.backgroundColor
 
         el_contentCtn.className = CONSTANTS.CLASS_NAME.CONTENT
+        this.#renderContent(el_contentCtn)
 
         const offset = this.#getOffset()
 
@@ -151,8 +139,21 @@ class Tip {
         el_wrap.appendChild(el_angle)
         el_ctn.appendChild(el_wrap)
 
+        document.body.appendChild(el_ctn)
+
         this.#el_tip = el_ctn
         this.#el_content = el_contentCtn
+    }
+    #renderContent(el_ctn = this.#el_content) {
+        if (!el_ctn) return
+
+        if (typeOf(this.content) === 'String') {
+            el_ctn.innerHTML = this.content
+        }
+
+        if (typeOf(this.content).includes('Element')) {
+            el_ctn.appendChild(this.content)
+        }
     }
     #getOffset() {
         let { top, bottom, left, right } = this.#el.getBoundingClientRect(),
@@ -177,7 +178,7 @@ class Tip {
         }
     }
     show() {
-        this.#el_tip && document.body.appendChild(this.#el_tip)
+        this.#render()
     }
     hide() {
         try {

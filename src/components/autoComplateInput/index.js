@@ -1,5 +1,5 @@
 import CONSTANTS from './CONSTANTS'
-import { getOffsetLeft, getOffsetTop, isParentNode, stopDefaultEvent } from '../../utils'
+import { getOffsetLeft, getOffsetTop, isParentNode, stopDefaultEvent, typeOf } from '../../utils'
 import './assets/stylus/index.styl'
 
 class AutoComplateInput {
@@ -33,7 +33,7 @@ class AutoComplateInput {
         return this.#onSelect
     }
     set onSelect(value) {
-        if (value instanceof Function) {
+        if (typeOf(value) === 'Function') {
             this.#onSelect = value
         }
     }
@@ -41,7 +41,7 @@ class AutoComplateInput {
         return this.#onCustomInputReset
     }
     set onCustomInputReset(value) {
-        if (value instanceof Function) {
+        if (typeOf(value) === 'Function') {
             this.#onCustomInputReset = value
         }
     }
@@ -62,10 +62,10 @@ class AutoComplateInput {
         }
     }
     constructor(el_input, customOpts = {}) {
-        if (typeof el_input === 'string') {
+        if (typeOf(el_input) === 'String') {
             el_input = document.querySelector(el_input)
         }
-        if (!(el_input instanceof HTMLElement) || el_input.tagName !== 'INPUT') {
+        if (!typeOf(el_input).includes('Element') || el_input.tagName !== 'INPUT') {
             throw new Error(`el必须为input标签`)
         }
         this.#el_input = el_input
@@ -113,9 +113,9 @@ class AutoComplateInput {
 
         function createSuggestion(suggestion) {
             let text = ''
-            if (typeof suggestion === 'string') {
+            if (typeOf(suggestion) === 'String') {
                 text = suggestion
-            } else if (typeof suggestion === 'object') {
+            } else if (typeOf(suggestion) === 'Object') {
                 if (suggestion.hasOwnProperty(this.config.suggestionValueKey)) {
                     text = suggestion[this.config.suggestionValueKey]
                 } else {
@@ -199,7 +199,7 @@ class AutoComplateInput {
     fetch() {
         this.#reset()
         this.#show()
-        if (typeof this.config.fetchSuggestions === 'function') {
+        if (typeOf(this.config.fetchSuggestions) === 'Function') {
             this.config.fetchSuggestions(this.el_input.value, (suggestions) => {
                 this.#createSuggestionItem(suggestions)
                 this.#handleLoading(false)
