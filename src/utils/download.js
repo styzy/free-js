@@ -1,21 +1,29 @@
-const download = function (url, { allowCrossOrigin = true, fileName = getFileName(url), headers = {}, onSuccess = () => {} } = {}) {
+const download = function (url, { allowCrossOrigin = false, fileName = getFileName(url), headers = {}, onSuccess = () => {} } = {}) {
     try {
-        if (checkOrigin(url) || !allowCrossOrigin) {
-            // 同域
-            let el = document.createElement('a')
-            el.setAttribute('download', fileName)
-            // el.target = '_blank'
-            el.href = url
-            el.click()
-            onSuccess(fileName)
+        if (isSameOrigin(url)) {
+            sameOriginDownload()
         } else {
-            // 跨域
-            crossOriginDownload()
+            if (allowCrossOrigin) {
+                crossOriginDownload()
+            } else {
+                window.open(url)
+            }
         }
     } catch (error) {
         console.error('free download error:\n', error)
     }
 
+    // 同源下载
+    function sameOriginDownload() {
+        let el = document.createElement('a')
+        el.setAttribute('download', fileName)
+        // el.target = '_blank'
+        el.href = url
+        el.click()
+        onSuccess(fileName)
+    }
+
+    // 跨域下载
     function crossOriginDownload() {
         let xhr = null
         try {
@@ -50,7 +58,7 @@ const download = function (url, { allowCrossOrigin = true, fileName = getFileNam
     }
 }
 
-function checkOrigin(url) {
+function isSameOrigin(url) {
     let localUrl = new URL(window.location.href)
     try {
         let targetUrl = new URL(url)
