@@ -1,11 +1,8 @@
-export const version = '1.9.0'
-export const buildTime = timeFormat(BUILD_TIME)
-export const githubUrl = 'https://github.com/styzy/free-js'
+import _Date from '../NativeClass/Date'
 
-function timeFormat(stamp) {
-    let date = new Date(stamp)
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-}
+export const version = '2.0.0'
+export const buildTime = _Date.format(new Date(BUILD_TIME))
+export const githubUrl = 'https://github.com/styzy/free-js'
 
 export default {
     version,

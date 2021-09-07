@@ -1,5 +1,7 @@
 import CONSTANTS from './CONSTANTS'
 import { getOffsetLeft, getOffsetTop, isParentNode, stopDefaultEvent, typeOf } from '../../utils'
+import _String from '../../NativeClass/String'
+import Color from '../../ExtensionClass/Color'
 import './assets/stylus/index.styl'
 
 class AutoComplateInput {
@@ -10,6 +12,8 @@ class AutoComplateInput {
         fetchDelay: 500,
         fetchSuggestions: null,
         fetchOnFocus: false,
+        matchHighLight: false,
+        matchHighLightColor: '#42A5F5',
         customInputEnable: true,
         maxHeight: 270
     }
@@ -123,12 +127,21 @@ class AutoComplateInput {
                     return false
                 }
             } else {
-                console.error('Suggestion`type  must be string or object')
+                console.error(`Suggestion type must be string or object`)
                 return false
             }
             let el = document.createElement('div')
             el.className = CONSTANTS.CLASS_NAME.SUGGESTION_ITEM
-            el.innerText = text
+            if (this.#config.matchHighLight) {
+                let color = this.#config.matchHighLightColor
+                if (color instanceof Color) {
+                    color = color.toHex()
+                }
+                text = _String.replaceAll(text, this.el_input.value.toString(), `<span style="color:${color};">${this.el_input.value}</span>`)
+                el.innerHTML = text
+            } else {
+                el.innerText = text
+            }
             el.addEventListener('click', this.#selectHandler.bind(this, text, suggestion))
             return el
         }

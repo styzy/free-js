@@ -1,6 +1,6 @@
 {
 	"name": "@styzy/free-js",
-	"version": "1.9.0",
+	"version": "2.0.0",
 	"description": "An Awesome Framework For Js",
 	"keywords": [
 		"free",
@@ -27,30 +27,30 @@
 		"build": "webpack --mode=production"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.6.4",
-		"@babel/core": "^7.6.4",
-		"@babel/plugin-proposal-class-properties": "^7.8.3",
-		"@babel/plugin-proposal-private-methods": "^7.8.3",
-		"@babel/plugin-syntax-dynamic-import": "^7.2.0",
-		"@babel/plugin-transform-modules-commonjs": "^7.6.0",
-		"@babel/plugin-transform-runtime": "^7.6.2",
-		"@babel/preset-env": "^7.6.3",
-		"autoprefixer": "^9.6.1",
-		"babel-loader": "^8.0.6",
-		"css-loader": "^3.0.0",
+		"@babel/cli": "^7.15.4",
+		"@babel/core": "^7.15.5",
+		"@babel/plugin-proposal-class-properties": "^7.14.5",
+		"@babel/plugin-proposal-private-methods": "^7.14.5",
+		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
+		"@babel/plugin-transform-modules-commonjs": "^7.15.4",
+		"@babel/plugin-transform-runtime": "^7.15.0",
+		"@babel/preset-env": "^7.15.4",
+		"autoprefixer": "^9.8.6",
+		"babel-loader": "^8.2.2",
+		"css-loader": "^3.6.0",
 		"file-loader": "^5.1.0",
 		"html-webpack-plugin": "^3.2.0",
 		"postcss-loader": "^3.0.0",
 		"style-loader": "^0.23.1",
-		"stylus": "^0.54.5",
+		"stylus": "^0.54.8",
 		"stylus-loader": "^3.0.2",
-		"uglifyjs-webpack-plugin": "^2.1.3",
-		"url-loader": "^2.0.1",
-		"webpack": "^4.35.2",
-		"webpack-cli": "^3.3.5",
-		"webpack-dev-server": "^3.7.2"
+		"uglifyjs-webpack-plugin": "^2.2.0",
+		"url-loader": "^2.3.0",
+		"webpack": "^4.46.0",
+		"webpack-cli": "^3.3.12",
+		"webpack-dev-server": "^3.11.2"
 	},
 	"dependencies": {
-		"@babel/runtime-corejs3": "^7.6.3"
+		"@babel/runtime-corejs3": "^7.15.4"
 	}
 }

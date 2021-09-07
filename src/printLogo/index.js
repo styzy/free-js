@@ -8,7 +8,7 @@
 //      \ \_\             \ \_\   \ \_\      \ \_________\      \ \_________\
 //       \/_/              \/_/    \/_/       \/_________/       \/_________/
 
-const logo = function(core) {
+const printLogo = function (core) {
     let logoSrting =
         '%c' +
         '\n _________         __________         __________         __________' +
@@ -30,4 +30,4 @@ const logo = function(core) {
     console.log(logoSrting, baseStyle, versionStyle, baseStyle, versionStyle, baseStyle, versionStyle)
 }
 
-export default logo
+export default printLogo

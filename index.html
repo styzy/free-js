@@ -48,35 +48,40 @@
             <input type="text" />
         </div>
         <button id="setClipboard" type="button">复制到剪切板</button>
-        <button id="getClipboard" type="button">读取剪切板</button>
+        <!-- <button id="getClipboard" type="button">读取剪切板</button> -->
     </body>
     <script>
-        testClock()
+        free = new Free({
+            devMode: true,
+            awesomeMode: true
+        })
+        // testClock()
         // testTip()
         // testForEach()
-        // testAwesome()
         // testClipboard()
         // testLoad()
-        // testAutoComplateInput()
+        // free.awesome()
+        testAutoComplateInput()
         // testAjax()
         // testColor()
+        // testAwesome()
 
         function testClock() {
-            var clock = new free.components.Clock('#clock')
+            var clock = new Free.Components.Clock('#clock')
         }
 
         function testTip() {
             var el_tip0 = document.createElement('span')
             el_tip0.innerText = '动态元素'
             document.body.insertBefore(el_tip0, document.body.children[0])
-            var tip0 = new free.components.Tip(el_tip0, '这是一个动态插入元素的下右气泡', {
+            var tip0 = new Free.Components.Tip(el_tip0, '这是一个动态插入元素的下右气泡', {
                 anchor: 'bottom-right'
             })
-            var tip1 = new free.components.Tip('#tip1', '这是一个上左气泡')
-            var tip2 = new free.components.Tip('#tip2', '这是一个左下气泡', {
+            var tip1 = new Free.Components.Tip('#tip1', '这是一个上左气泡')
+            var tip2 = new Free.Components.Tip('#tip2', '这是一个左下气泡', {
                 anchor: 'left-bottom'
             })
-            var tip3 = new free.components.Tip(
+            var tip3 = new Free.Components.Tip(
                 '#tip3',
                 function () {
                     return '这是一个通过render方法渲染的右上气泡'
@@ -89,7 +94,7 @@
                     color: '#FFFFFF'
                 }
             )
-            var tip4 = new free.components.Tip(
+            var tip4 = new Free.Components.Tip(
                 '#tip4',
                 function () {
                     var el = document.createElement('div'),
@@ -111,7 +116,7 @@
                     anchor: 'right-bottom'
                 }
             )
-            var tip5 = new free.components.Tip('#tip5', '这是一个下右气泡', {
+            var tip5 = new Free.Components.Tip('#tip5', '这是一个下右气泡', {
                 anchor: 'bottom-right'
             })
             free('#tip5').addEventListener('click', function () {
@@ -147,7 +152,7 @@
         function testAwesome() {
             free.awesome()
             var newEl = document.createElement('a'),
-                targetEl = free('button')
+                targetEl = free('div')
             // console.log('targetEl: ', targetEl)
             newEl.href = 'http://stranger.ren'
             newEl.innerText = 'stranger.ren'
@@ -158,9 +163,9 @@
             free('#setClipboard').addEventListener('click', function () {
                 free.utils.setClipboard(Date.now())
             })
-            free('#getClipboard').addEventListener('click', function () {
-                console.log('clipboard', free.utils.getClipboard())
-            })
+            // free('#getClipboard').addEventListener('click', function () {
+            //     console.log('clipboard', free.utils.getClipboard())
+            // })
         }
 
         function testLoad() {
@@ -177,8 +182,10 @@
         }
 
         function testAutoComplateInput() {
-            var autoComplateInput = new free.components.AutoComplateInput('input', {
+            var autoComplateInput = new Free.Components.AutoComplateInput('input', {
                 customInputEnable: false,
+                matchHighLight: true,
+                matchHighLightColor: free.color('green'),
                 // suggestions: ['1', '2', '3'],
                 fetchSuggestions: function (value, setSuggestions) {
                     window.setTimeout(function () {

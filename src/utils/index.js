@@ -2,7 +2,6 @@ import createXMLHttpRequest from './createXMLHttpRequest'
 import deepClone from './deepClone'
 import deepCloneFunction from './deepCloneFunction'
 import download from './download'
-import findDom from './findDom'
 import fullScreen from './fullScreen'
 import getAbsoluteUrl from './getAbsoluteUrl'
 import getCursorPosition from './getCursorPosition'
@@ -31,7 +30,6 @@ export {
     deepClone,
     deepCloneFunction,
     download,
-    findDom,
     fullScreen,
     getAbsoluteUrl,
     getCursorPosition,
@@ -61,7 +59,6 @@ export default {
     deepClone,
     deepCloneFunction,
     download,
-    findDom,
     fullScreen,
     getAbsoluteUrl,
     getCursorPosition,

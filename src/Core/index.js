@@ -1,15 +1,15 @@
 import { version, buildTime, githubUrl } from '../config'
-import { findDom } from '../utils'
+import _Element from '../NativeClass/Element'
 class Core {
-    constructor(devMode) {
+    constructor() {
         const free = (...args) => {
-            return findDom(...args)
+            return _Element.find(...args)
         }
-        free.utils = {}
-        free.devMode = devMode
+
         free.version = version
         free.buildTime = buildTime
         free.githubUrl = githubUrl
+
         return free
     }
 }
