@@ -5,6 +5,8 @@ import download from './download'
 import fullScreen from './fullScreen'
 import getAbsoluteUrl from './getAbsoluteUrl'
 import getCursorPosition from './getCursorPosition'
+import getCursorSelectText from './getCursorSelectText'
+
 import getOffsetLeft from './getOffsetLeft'
 import getOffsetTop from './getOffsetTop'
 import getScrollLeft from './getScrollLeft'
@@ -21,6 +23,7 @@ import loadXml from './loadXml'
 import parseXml from './parseXml'
 import setClipboard from './setClipboard'
 import setCursorPosition from './setCursorPosition'
+import setCursorSelectTag from './setCursorSelectTag'
 import stopDefaultEvent from './stopDefaultEvent'
 import typeOf from './typeOf'
 import URLSearchParamsToObject from './URLSearchParamsToObject'
@@ -33,6 +36,7 @@ export {
     fullScreen,
     getAbsoluteUrl,
     getCursorPosition,
+    getCursorSelectText,
     getOffsetLeft,
     getOffsetTop,
     getScrollLeft,
@@ -49,6 +53,7 @@ export {
     parseXml,
     setClipboard,
     setCursorPosition,
+    setCursorSelectTag,
     stopDefaultEvent,
     typeOf,
     URLSearchParamsToObject
@@ -62,6 +67,7 @@ export default {
     fullScreen,
     getAbsoluteUrl,
     getCursorPosition,
+    getCursorSelectText,
     getOffsetLeft,
     getOffsetTop,
     getScrollLeft,
@@ -78,6 +84,7 @@ export default {
     parseXml,
     setClipboard,
     setCursorPosition,
+    setCursorSelectTag,
     stopDefaultEvent,
     typeOf,
     URLSearchParamsToObject

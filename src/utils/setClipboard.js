@@ -1,6 +1,6 @@
-const setClipboard = function (str) {
+const setClipboard = function (str, needFormat) {
     try {
-        let el = document.createElement('input')
+        let el = document.createElement(needFormat ? 'textarea' : 'input')
         el.style.opacity = '0'
         el.style.height = '0px'
         el.style.border = 'none'
