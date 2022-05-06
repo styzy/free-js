@@ -36,15 +36,16 @@ class Control {
 }
 
 const forEach = function (param = [], fn = () => {}) {
+    let forFn
     try {
-        const forFn = getForFn(param)
+        forFn = getForFn(param)
         if (!forFn) throw '第一个参数支持Number、Array和NodeList类型'
         if (typeOf(fn) !== 'Function') throw '第二个参数必须为Function类型'
-        return forFn(param, fn)
     } catch (error) {
         console.error(`forEach error: ${error}`)
         return
     }
+    return forFn(param, fn)
 }
 
 function getForFn(param) {

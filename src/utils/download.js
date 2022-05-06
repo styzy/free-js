@@ -54,7 +54,9 @@ const download = function (url, { allowCrossOrigin = false, fileName = getFileNa
 
         try {
             xhr.send()
-        } catch (error) {}
+        } catch (error) {
+            return
+        }
     }
 }
 

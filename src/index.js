@@ -1,5 +1,4 @@
 import Core from './Core'
-import Color from './ExtensionClass/Color'
 import NativeClass, { nativeClassExtensions } from './NativeClass'
 import ExtensionClass from './ExtensionClass'
 import Components from './Components'
@@ -47,14 +46,15 @@ class Free {
         core.color = (...args) => {
             return new ExtensionClass.Color(...args)
         }
-        core.logger = new ExtensionClass.Logger(devMode)
+        core.logger = new ExtensionClass.Logger(this.#devMode)
 
-        if (devMode) {
+        if (this.#devMode) {
             printLogo(core)
         }
-        if (awesomeMode) {
-            core.awesome()
+        if (this.#awesomeMode) {
+            this.#awesome()
         }
+
         return core
     }
     #awesome() {
@@ -69,21 +69,6 @@ class Free {
         }
     }
 }
-
-// const applyClassesExtendMethdos = () => {
-//     for (const className in classesExtendMethdos) {
-//         if (classesExtendMethdos.hasOwnProperty(className)) {
-//             if (window[className]) {
-//                 for (const methodName in classesExtendMethdos[className]) {
-//                     if (classesExtendMethdos[className].hasOwnProperty(methodName)) {
-//                         const method = classesExtendMethdos[className][methodName]
-//                         window[className].prototype[methodName] = method
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
 
 export { Free }
 
