@@ -6,9 +6,9 @@ import fullScreen from './fullScreen'
 import getAbsoluteUrl from './getAbsoluteUrl'
 import getCursorPosition from './getCursorPosition'
 import getCursorSelectText from './getCursorSelectText'
-
 import getOffsetLeft from './getOffsetLeft'
 import getOffsetTop from './getOffsetTop'
+import getQueryParamsByString from './getQueryParamsByString'
 import getScrollLeft from './getScrollLeft'
 import getScrollTop from './getScrollTop'
 import getUrlQueryParams from './getUrlQueryParams'
@@ -39,6 +39,7 @@ export {
     getCursorSelectText,
     getOffsetLeft,
     getOffsetTop,
+    getQueryParamsByString,
     getScrollLeft,
     getScrollTop,
     getUrlQueryParams,
@@ -70,6 +71,7 @@ export default {
     getCursorSelectText,
     getOffsetLeft,
     getOffsetTop,
+    getQueryParamsByString,
     getScrollLeft,
     getScrollTop,
     getUrlQueryParams,

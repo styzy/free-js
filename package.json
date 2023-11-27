@@ -1,56 +1,56 @@
 {
-	"name": "@styzy/free-js",
-	"version": "2.1.0",
-	"description": "An Awesome Framework For Js",
-	"keywords": [
-		"free",
-		"free-js"
-	],
-	"author": {
-		"name": "STYZY",
-		"email": "styzyreal@126.com",
-		"url": "https://our.styzy.cn"
-	},
-	"bugs": {
-		"url": "https://github.com/styzy/free-js/issues",
-		"email": "styzyreal@126.com"
-	},
-	"license": "ISC",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/styzy/free-js"
-	},
-	"private": false,
-	"main": "dist/free.umd.js",
-	"scripts": {
-		"dev": "webpack-dev-server --mode=development --open --hot",
-		"build": "webpack --mode=production"
-	},
-	"devDependencies": {
-		"@babel/cli": "^7.15.4",
-		"@babel/core": "^7.15.5",
-		"@babel/plugin-proposal-class-properties": "^7.14.5",
-		"@babel/plugin-proposal-private-methods": "^7.14.5",
-		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
-		"@babel/plugin-transform-modules-commonjs": "^7.15.4",
-		"@babel/plugin-transform-runtime": "^7.15.0",
-		"@babel/preset-env": "^7.15.4",
-		"autoprefixer": "^9.8.6",
-		"babel-loader": "^8.2.2",
-		"css-loader": "^3.6.0",
-		"file-loader": "^5.1.0",
-		"html-webpack-plugin": "^3.2.0",
-		"postcss-loader": "^3.0.0",
-		"style-loader": "^0.23.1",
-		"stylus": "^0.54.8",
-		"stylus-loader": "^3.0.2",
-		"uglifyjs-webpack-plugin": "^2.2.0",
-		"url-loader": "^2.3.0",
-		"webpack": "^4.46.0",
-		"webpack-cli": "^3.3.12",
-		"webpack-dev-server": "^3.11.2"
-	},
-	"dependencies": {
-		"@babel/runtime-corejs3": "^7.15.4"
-	}
+    "name": "@styzy/free-js",
+    "version": "2.1.1",
+    "description": "An Awesome Framework For Js",
+    "keywords": [
+        "free",
+        "free-js"
+    ],
+    "author": {
+        "name": "STYZY",
+        "email": "styzyreal@126.com",
+        "url": "https://our.styzy.cn"
+    },
+    "bugs": {
+        "url": "https://github.com/styzy/free-js/issues",
+        "email": "styzyreal@126.com"
+    },
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/styzy/free-js"
+    },
+    "private": false,
+    "main": "dist/free.umd.js",
+    "scripts": {
+        "dev": "webpack-dev-server --mode=development --open --hot",
+        "build": "webpack --mode=production"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.15.4",
+        "@babel/core": "^7.15.5",
+        "@babel/plugin-proposal-class-properties": "^7.14.5",
+        "@babel/plugin-proposal-private-methods": "^7.14.5",
+        "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+        "@babel/plugin-transform-modules-commonjs": "^7.15.4",
+        "@babel/plugin-transform-runtime": "^7.15.0",
+        "@babel/preset-env": "^7.15.4",
+        "autoprefixer": "^9.8.6",
+        "babel-loader": "^8.2.2",
+        "css-loader": "^3.6.0",
+        "file-loader": "^5.1.0",
+        "html-webpack-plugin": "^3.2.0",
+        "postcss-loader": "^3.0.0",
+        "style-loader": "^0.23.1",
+        "stylus": "^0.54.8",
+        "stylus-loader": "^3.0.2",
+        "uglifyjs-webpack-plugin": "^2.2.0",
+        "url-loader": "^2.3.0",
+        "webpack": "^4.46.0",
+        "webpack-cli": "^3.3.12",
+        "webpack-dev-server": "^3.11.2"
+    },
+    "dependencies": {
+        "@babel/runtime-corejs3": "^7.15.4"
+    }
 }
